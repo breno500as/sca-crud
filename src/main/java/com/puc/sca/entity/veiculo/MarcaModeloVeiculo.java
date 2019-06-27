@@ -17,7 +17,7 @@ public class MarcaModeloVeiculo extends BaseEntity {
 		return descricao;
 	}
 
-	public void setDescricao(final String descricao) {
+	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 

@@ -10,9 +10,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Classe base para todas as entidades, sobrescrevendo equals e hashcode.
- * 
  * @author breno
- *
  */
 
 @MappedSuperclass
@@ -29,7 +27,7 @@ public abstract class BaseEntity implements Serializable {
 		return id;
 	}
 
-	public void setId(final Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

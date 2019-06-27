@@ -3,16 +3,15 @@ package com.puc.sca.entity.equipamento;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.puc.sca.entity.BaseEntity;
 import com.puc.sca.tipo.Status;
 
 /**
- * Entidade base para equipamentos utilizados na mineiração.
- * Britadores, trituradores, etc.
+ * Entidade base para equipamentos utilizados na mineiração. Britadores, trituradores, etc.
  * @author breno
- *
  */
 
 @Entity
@@ -33,7 +32,12 @@ public class Equipamento extends BaseEntity {
 	private Date dataCadastro = new Date();
 
 	@NotNull
+	@ManyToOne
 	private TipoEquipamento tipoEquipamento;
+
+	@NotNull
+	@ManyToOne
+	private MarcaModeloEquipamento marcaModeloEquipamento;
 
 	private String observacoesDeManuseio;
 
@@ -71,5 +75,13 @@ public class Equipamento extends BaseEntity {
 
 	public void setObservacoesDeManuseio(String observacoesDeManuseio) {
 		this.observacoesDeManuseio = observacoesDeManuseio;
+	}
+
+	public MarcaModeloEquipamento getMarcaModeloEquipamento() {
+		return marcaModeloEquipamento;
+	}
+
+	public void setMarcaModeloEquipamento(MarcaModeloEquipamento marcaModeloEquipamento) {
+		this.marcaModeloEquipamento = marcaModeloEquipamento;
 	}
 }

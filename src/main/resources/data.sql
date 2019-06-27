@@ -1,0 +1,14 @@
+insert into tipo_veiculo (id,descricao) values (1, 'Escavadeira');
+insert into tipo_veiculo (id,descricao) values (2, 'Retroescavadeira');
+insert into tipo_veiculo (id,descricao) values (3, 'Caminhão');
+insert into tipo_veiculo (id,descricao) values (4, 'Trator');
+insert into tipo_veiculo (id,descricao) values (5, 'Carro');
+insert into tipo_equipamento (id,descricao) values (1, 'Britador de impacto');
+insert into tipo_equipamento (id,descricao) values (2, 'Britador mandíbula');
+insert into tipo_equipamento (id,descricao) values (3, 'Peneira vibratória');
+insert into tipo_equipamento (id,descricao) values (4, 'Peneira desaguadora');
+insert into tipo_equipamento (id,descricao) values (5, 'Compressor de ar');
+insert into tipo_equipamento (id,descricao) values (6, 'Tela de alta frequência');
+insert into tipo_equipamento (id,descricao) values (7, 'Hydrocyclone');
+insert into tipo_equipamento (id,descricao) values (8, 'Triturador de VSI');
+insert into tipo_equipamento (id,descricao) values (9, 'Triturador de martelo');

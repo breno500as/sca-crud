@@ -5,12 +5,6 @@ import javax.validation.constraints.NotNull;
 
 import com.puc.sca.entity.BaseEntity;
 
-// Britador de impacto
-// Britador mandíbula
-// Peneira VIBRATORIA,
-// Peneira DESAGUADORA
-// Compressor de Ar
-
 @Entity
 public class TipoEquipamento extends BaseEntity {
 

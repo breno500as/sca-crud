@@ -5,10 +5,6 @@ import javax.validation.constraints.NotNull;
 
 import com.puc.sca.entity.BaseEntity;
 
-// escavadeira
-// retroescavadeira
-// caminhão
-// trator
 
 @Entity
 public class TipoVeiculo extends BaseEntity {
@@ -22,7 +18,7 @@ public class TipoVeiculo extends BaseEntity {
 		return descricao;
 	}
 
-	public void setDescricao(final String descricao) {
+	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 

@@ -3,6 +3,7 @@ package com.puc.sca.entity.veiculo;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.puc.sca.entity.BaseEntity;
@@ -23,9 +24,11 @@ public class Veiculo extends BaseEntity {
 	private Date dataFabricacao;
 
 	@NotNull
+	@ManyToOne
 	private MarcaModeloVeiculo modeloVeiculo;
 
 	@NotNull
+	@ManyToOne
 	private TipoVeiculo tipoVeiculo;
 
 	/**
@@ -42,7 +45,7 @@ public class Veiculo extends BaseEntity {
 		return placa;
 	}
 
-	public void setPlaca(final String placa) {
+	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
 
@@ -50,7 +53,7 @@ public class Veiculo extends BaseEntity {
 		return dataFabricacao;
 	}
 
-	public void setDataFabricacao(final Date dataFabricacao) {
+	public void setDataFabricacao(Date dataFabricacao) {
 		this.dataFabricacao = dataFabricacao;
 	}
 
@@ -58,7 +61,7 @@ public class Veiculo extends BaseEntity {
 		return tipoVeiculo;
 	}
 
-	public void setTipoVeiculo(final TipoVeiculo tipoVeiculo) {
+	public void setTipoVeiculo(TipoVeiculo tipoVeiculo) {
 		this.tipoVeiculo = tipoVeiculo;
 	}
 
@@ -66,7 +69,7 @@ public class Veiculo extends BaseEntity {
 		return modeloVeiculo;
 	}
 
-	public void setModeloVeiculo(final MarcaModeloVeiculo modeloVeiculo) {
+	public void setModeloVeiculo(MarcaModeloVeiculo modeloVeiculo) {
 		this.modeloVeiculo = modeloVeiculo;
 	}
 
@@ -74,7 +77,7 @@ public class Veiculo extends BaseEntity {
 		return numeroIdentificacaoProduto;
 	}
 
-	public void setNumeroIdentificacaoProduto(final String numeroIdentificacaoProduto) {
+	public void setNumeroIdentificacaoProduto(String numeroIdentificacaoProduto) {
 		this.numeroIdentificacaoProduto = numeroIdentificacaoProduto;
 	}
 

@@ -58,6 +58,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>	
 			</plugin>
 			<plugin>
+			 <!--  Necessário para evitar erro de compilação no eclipse -->
 			 <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-jar-plugin</artifactId>
               <version>3.1.1</version>

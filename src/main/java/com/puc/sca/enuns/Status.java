@@ -1,4 +1,4 @@
-package com.puc.sca.tipo;
+package com.puc.sca.enuns;
 
 public enum Status {
 

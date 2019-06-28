@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.base.BaseEntity;
+import com.puc.sca.entity.BaseEntity;
 
 @Entity
 public class TipoMarcaModelo extends BaseEntity {

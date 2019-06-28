@@ -1,4 +1,4 @@
-package com.puc.sca.entity.base;
+package com.puc.sca.entity;
 
 import java.io.Serializable;
 

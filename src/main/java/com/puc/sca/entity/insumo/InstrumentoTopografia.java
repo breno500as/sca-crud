@@ -1,5 +1,7 @@
 package com.puc.sca.entity.insumo;
 
+import java.util.UUID;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -17,18 +19,15 @@ public class InstrumentoTopografia extends Insumo {
 
 	private static final long serialVersionUID = -5922477861010679228L;
 
-	/**
-	 * Um identificador exclusivo vindo de fábrica daquele instrumento.
-	 */
 	@NotNull
-	private String numeroSerie;
+	private String codigoInstrumento = UUID.randomUUID().toString();
 
-	public String getNumeroSerie() {
-		return numeroSerie;
+	public String getCodigoInstrumento() {
+		return codigoInstrumento;
 	}
 
-	public void setNumeroSerie(String numeroSerie) {
-		this.numeroSerie = numeroSerie;
+	public void setCodigoInstrumento(String codigoInstrumento) {
+		this.codigoInstrumento = codigoInstrumento;
 	}
 
 }

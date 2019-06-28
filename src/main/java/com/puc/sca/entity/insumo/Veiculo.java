@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Entidade base para veículos automotores para deslocamento na mineiradora ou
- * para deslocamento em vias públicas.
+ * para deslocamento externo.
  * 
  * @author breno
  */
@@ -19,7 +19,6 @@ public class Veiculo extends Insumo {
 
 	private static final long serialVersionUID = -3626537777631555558L;
 
-	@NotNull
 	private Date dataFabricacao;
 
 	/**
@@ -28,6 +27,8 @@ public class Veiculo extends Insumo {
 	 * 
 	 * @link https://www.legisweb.com.br/legislacao/?id=317949
 	 */
+
+	@NotNull
 	private String numeroIdentificacaoVeiculo;
 
 	private String placa;

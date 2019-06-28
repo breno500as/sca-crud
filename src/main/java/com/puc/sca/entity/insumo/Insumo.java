@@ -11,15 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.base.BaseEntity;
-import com.puc.sca.entity.insumo.periodo.PeriodoManutencao;
+import com.puc.sca.entity.BaseEntity;
 import com.puc.sca.entity.insumo.tipo.TipoMarcaModelo;
+import com.puc.sca.enums.Status;
 import com.puc.sca.entity.insumo.tipo.TipoDescricaoInsumo;
-import com.puc.sca.enuns.Status;
 
 /**
- * Classe base para entidades de insumo, máquinas da mineiradora, instrumentos,
- * veículos, etc.
+ * Classe base para entidades de insumo principais da mineiradora: máquinas, instrumentos
+ * de topografia, veículos, etc.
  * 
  * @author breno
  *
@@ -47,7 +46,9 @@ public class Insumo extends BaseEntity {
 	private TipoMarcaModelo tipoMarcaModelo;
 
 	@OneToOne
-	private PeriodoManutencao periodoManutencao;
+	private AgendaManutencaoInsumo manutencaoInsumo;
+
+	private String observacoesTecnicas;
 
 	public Status getStatus() {
 		return status;
@@ -81,12 +82,20 @@ public class Insumo extends BaseEntity {
 		this.tipoMarcaModelo = tipoMarcaModelo;
 	}
 
-	public PeriodoManutencao getPeriodoManutencao() {
-		return periodoManutencao;
+	public AgendaManutencaoInsumo getManutencaoInsumo() {
+		return manutencaoInsumo;
 	}
 
-	public void setPeriodoManutencao(PeriodoManutencao periodoManutencao) {
-		this.periodoManutencao = periodoManutencao;
+	public void setManutencaoInsumo(AgendaManutencaoInsumo manutencaoInsumo) {
+		this.manutencaoInsumo = manutencaoInsumo;
+	}
+
+	public String getObservacoesTecnicas() {
+		return observacoesTecnicas;
+	}
+
+	public void setObservacoesTecnicas(String observacoesTecnicas) {
+		this.observacoesTecnicas = observacoesTecnicas;
 	}
 
 }

@@ -5,8 +5,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.base.BaseEntity;
-import com.puc.sca.enuns.TipoInsumo;
+import com.puc.sca.entity.BaseEntity;
+import com.puc.sca.enums.TipoInsumo;
+
+/**
+ * Tipos específicos pré determinados de máquinas, veículos e instrumentos topográficos.
+ * @author Breno
+ *
+ */
 
 @Entity
 public class TipoDescricaoInsumo extends BaseEntity {

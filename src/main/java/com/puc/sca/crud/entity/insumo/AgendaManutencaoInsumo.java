@@ -1,11 +1,11 @@
-package com.puc.sca.entity.insumo;
+package com.puc.sca.crud.entity.insumo;
 
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.BaseEntity;
+import com.puc.sca.crud.entity.BaseEntity;
 
 /**
  * Entidade para agendamento de manutenção do insumo.

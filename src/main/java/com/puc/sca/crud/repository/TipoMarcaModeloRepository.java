@@ -1,17 +1,17 @@
-package com.puc.sca.repository;
+package com.puc.sca.crud.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
-import com.puc.sca.entity.insumo.tipo.TipoDescricaoInsumo;
+import com.puc.sca.crud.entity.insumo.tipo.TipoMarcaModelo;
 
-@RepositoryRestResource(collectionResourceRel = "tipos-descricao-insumo", path = "tipos-descricao-insumo")
-public interface TipoDescricaoInsumoRepository extends CrudRepository<TipoDescricaoInsumo, Long> {
+@RepositoryRestResource(collectionResourceRel = "tipos-marca-modelo", path = "tipos-marca-modelo")
+public interface TipoMarcaModeloRepository extends CrudRepository<TipoMarcaModelo, Long> {
 
 	@Override
 	@RestResource(exported = false)
-	default <S extends TipoDescricaoInsumo> S save(S entity) {
+	default <S extends TipoMarcaModelo> S save(S entity) {
 		return null;
 	}
 

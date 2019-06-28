@@ -1,4 +1,4 @@
-package com.puc.sca.entity.insumo;
+package com.puc.sca.crud.entity.insumo;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

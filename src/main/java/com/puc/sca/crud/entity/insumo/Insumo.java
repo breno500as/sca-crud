@@ -1,4 +1,4 @@
-package com.puc.sca.entity.insumo;
+package com.puc.sca.crud.entity.insumo;
 
 import java.util.Date;
 
@@ -11,10 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.BaseEntity;
-import com.puc.sca.entity.insumo.tipo.TipoMarcaModelo;
-import com.puc.sca.enums.Status;
-import com.puc.sca.entity.insumo.tipo.TipoDescricaoInsumo;
+import com.puc.sca.crud.entity.BaseEntity;
+import com.puc.sca.crud.entity.insumo.tipo.TipoDescricaoInsumo;
+import com.puc.sca.crud.entity.insumo.tipo.TipoMarcaModelo;
+import com.puc.sca.crud.enums.Status;
 
 /**
  * Classe base para entidades de insumo principais da mineiradora: máquinas,

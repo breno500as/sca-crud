@@ -1,4 +1,4 @@
-package com.puc.sca.controller;
+package com.puc.sca.crud.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

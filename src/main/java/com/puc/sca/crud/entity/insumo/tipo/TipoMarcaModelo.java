@@ -1,10 +1,10 @@
-package com.puc.sca.entity.insumo.tipo;
+package com.puc.sca.crud.entity.insumo.tipo;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.BaseEntity;
+import com.puc.sca.crud.entity.BaseEntity;
 
 @Entity
 public class TipoMarcaModelo extends BaseEntity {

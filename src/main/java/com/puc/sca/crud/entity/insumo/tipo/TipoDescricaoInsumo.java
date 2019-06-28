@@ -1,12 +1,12 @@
-package com.puc.sca.entity.insumo.tipo;
+package com.puc.sca.crud.entity.insumo.tipo;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.entity.BaseEntity;
-import com.puc.sca.enums.TipoInsumo;
+import com.puc.sca.crud.entity.BaseEntity;
+import com.puc.sca.crud.enums.TipoInsumo;
 
 /**
  * Tipos específicos pré determinados de máquinas, veículos e instrumentos topográficos.

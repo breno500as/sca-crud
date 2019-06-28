@@ -1,4 +1,4 @@
-package com.puc.sca.enums;
+package com.puc.sca.crud.enums;
 
 public enum Status {
 

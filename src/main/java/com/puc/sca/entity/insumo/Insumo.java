@@ -17,8 +17,8 @@ import com.puc.sca.enums.Status;
 import com.puc.sca.entity.insumo.tipo.TipoDescricaoInsumo;
 
 /**
- * Classe base para entidades de insumo principais da mineiradora: máquinas, instrumentos
- * de topografia, veículos, etc.
+ * Classe base para entidades de insumo principais da mineiradora: máquinas,
+ * instrumentos de topografia, veículos, etc.
  * 
  * @author breno
  *
@@ -46,9 +46,11 @@ public class Insumo extends BaseEntity {
 	private TipoMarcaModelo tipoMarcaModelo;
 
 	@OneToOne
-	private AgendaManutencaoInsumo manutencaoInsumo;
+	private AgendaManutencaoInsumo agendaManutencaoInsumo;
 
-	private String observacoesTecnicas;
+	private String observacoes;
+
+	private String linkInformacoesTecnicasFornecedor;
 
 	public Status getStatus() {
 		return status;
@@ -82,20 +84,28 @@ public class Insumo extends BaseEntity {
 		this.tipoMarcaModelo = tipoMarcaModelo;
 	}
 
-	public AgendaManutencaoInsumo getManutencaoInsumo() {
-		return manutencaoInsumo;
+	public AgendaManutencaoInsumo getAgendaManutencaoInsumo() {
+		return agendaManutencaoInsumo;
 	}
 
-	public void setManutencaoInsumo(AgendaManutencaoInsumo manutencaoInsumo) {
-		this.manutencaoInsumo = manutencaoInsumo;
+	public void setAgendaManutencaoInsumo(AgendaManutencaoInsumo agendaManutencaoInsumo) {
+		this.agendaManutencaoInsumo = agendaManutencaoInsumo;
 	}
 
-	public String getObservacoesTecnicas() {
-		return observacoesTecnicas;
+	public String getObservacoes() {
+		return observacoes;
 	}
 
-	public void setObservacoesTecnicas(String observacoesTecnicas) {
-		this.observacoesTecnicas = observacoesTecnicas;
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+	public String getLinkInformacoesTecnicasFornecedor() {
+		return linkInformacoesTecnicasFornecedor;
+	}
+
+	public void setLinkInformacoesTecnicasFornecedor(String linkInformacoesTecnicasFornecedor) {
+		this.linkInformacoesTecnicasFornecedor = linkInformacoesTecnicasFornecedor;
 	}
 
 }

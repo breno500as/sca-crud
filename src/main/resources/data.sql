@@ -1,20 +1,20 @@
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (1, 'Escavadeira', 0);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (2, 'Retroescavadeira',0);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (3, 'Caminhão',0);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (4, 'Trator',0);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (5, 'Carro',0);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (6, 'Britador de impacto',1);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (7, 'Britador mandíbula',1);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (8, 'Peneira vibratória',1);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (9, 'Peneira desaguadora',1);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (10, 'Triturador',1);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (11, 'Moinho de martelo',1);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (12, 'Nivelador óptico',2);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (13, 'Teodolito eletrônico',2);
-insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (14, 'Baliza Topográfica',2);
-
-
- 
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (1, 'Escavadeira', 'VEICULO');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (2, 'Retroescavadeira','VEICULO');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (3, 'Caminhão','VEICULO');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (4, 'Trator','VEICULO');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (5, 'Carro','VEICULO');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (6, 'Britador de impacto','MAQUINA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (7, 'Britador mandíbula','MAQUINA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (8, 'Peneira vibratória','MAQUINA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (9, 'Peneira desaguadora','MAQUINA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (10,'Triturador','MAQUINA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (11, 'Moinho de martelo','MAQUINA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (12, 'Nivelador óptico','INSTRUMENTO_TOPOGRAFIA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (13, 'Teodolito eletrônico','INSTRUMENTO_TOPOGRAFIA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (14, 'Baliza topográfica','INSTRUMENTO_TOPOGRAFIA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (15, 'Crackmeter','INSTRUMENTO_GEOTECNIA');
+insert into tipo_descricao_insumo (id,descricao, tipo_insumo) values (16, 'Sismógrafo','INSTRUMENTO_GEOTECNIA');
+	
 
 insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (1,'Jcb','4CXECO', 1);  
 insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (2,'Hyundai','R220LC-9S',2);  
@@ -30,7 +30,5 @@ insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) valu
 insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (12,'RG MAQ','RGM75C',11);  
 insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (13,'Xpex','AT-32',12);  
 insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (14,'Kolida','Kt-02',13);   
-insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (15,'Geogex','GX-BG33',14);  
-  
-
-
+insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (15,'Geogex','GX-BG33',14);
+insert into tipo_marca_modelo (id, marca, modelo, tipo_descricao_insumo_id) values (16,'Geokon','4420',15);

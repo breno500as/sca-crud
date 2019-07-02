@@ -3,13 +3,14 @@ package com.puc.sca.crud.entity.insumo.tipo;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 
 import com.puc.sca.crud.entity.BaseEntity;
 import com.puc.sca.crud.enums.TipoInsumo;
 
 /**
- * Tipos específicos pré determinados de máquinas, veículos e instrumentos topográficos.
+ * Tipos específicos pré determinados de máquinas, veículos e instrumentos
+ * topográficos.
+ * 
  * @author Breno
  *
  */
@@ -19,11 +20,9 @@ public class TipoDescricaoInsumo extends BaseEntity {
 
 	private static final long serialVersionUID = 7368127298635893508L;
 
-	@NotNull
 	private String descricao;
 
-	@NotNull
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private TipoInsumo tipoInsumo;
 
 	public String getDescricao() {
@@ -42,8 +41,5 @@ public class TipoDescricaoInsumo extends BaseEntity {
 		this.tipoInsumo = tipoInsumo;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 }

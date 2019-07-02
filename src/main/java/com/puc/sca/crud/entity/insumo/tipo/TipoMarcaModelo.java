@@ -2,7 +2,6 @@ package com.puc.sca.crud.entity.insumo.tipo;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 
 import com.puc.sca.crud.entity.BaseEntity;
 
@@ -11,10 +10,8 @@ public class TipoMarcaModelo extends BaseEntity {
 
 	private static final long serialVersionUID = 7624651984961508447L;
 
-	@NotNull
 	private String marca;
 
-	@NotNull
 	private String modelo;
 
 	@OneToOne

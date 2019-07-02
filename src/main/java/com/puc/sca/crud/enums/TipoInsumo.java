@@ -9,6 +9,9 @@ package com.puc.sca.crud.enums;
 
 public enum TipoInsumo {
 
-	VEICULO, MAQUINA, INSTRUMENTO_TOPOGRAFIA
+	VEICULO, 
+	MAQUINA, 
+	INSTRUMENTO_TOPOGRAFIA, 
+	INSTRUMENTO_GEOTECNIA
 
 }

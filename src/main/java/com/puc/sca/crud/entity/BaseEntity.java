@@ -10,17 +10,18 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Classe base para todas as entidades, sobrescrevendo equals e hashcode.
+ * 
  * @author breno
  */
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -4631370505976219166L;
+	 
 
 	@Id
 	@NotNull
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
 
 	public Long getId() {
@@ -43,8 +44,7 @@ public abstract class BaseEntity implements Serializable {
 
 		final BaseEntity baseEntity = (BaseEntity) obj;
 
-		if (this.getId() != baseEntity.getId() && 
-		   (this.getId() == null || !this.id.equals(baseEntity.id))) {
+		if (this.getId() != baseEntity.getId() && (this.getId() == null || !this.id.equals(baseEntity.id))) {
 			return false;
 		}
 		return true;

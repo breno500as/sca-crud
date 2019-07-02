@@ -1,20 +1,19 @@
 package com.puc.sca.crud.entity.insumo;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.puc.sca.crud.entity.AgendaManutencaoInsumo;
 import com.puc.sca.crud.entity.BaseEntity;
 import com.puc.sca.crud.entity.insumo.tipo.TipoDescricaoInsumo;
 import com.puc.sca.crud.entity.insumo.tipo.TipoMarcaModelo;
-import com.puc.sca.crud.enums.Status;
 
 /**
  * Classe base para entidades de insumo principais da mineiradora: máquinas,
@@ -28,11 +27,7 @@ import com.puc.sca.crud.enums.Status;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Insumo extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
-
-	@NotNull
-	@Enumerated(EnumType.ORDINAL)
-	private Status status;
+	private static final long serialVersionUID = 7977428935549712028L;
 
 	@NotNull
 	private Date dataCadastro = new Date();
@@ -41,24 +36,17 @@ public class Insumo extends BaseEntity {
 	@ManyToOne
 	private TipoDescricaoInsumo tipoDescricaoInsumo;
 
-	@NotNull
 	@ManyToOne
 	private TipoMarcaModelo tipoMarcaModelo;
 
-	@OneToOne
+	@OneToOne(mappedBy = "insumo")
 	private AgendaManutencaoInsumo agendaManutencaoInsumo;
 
 	private String observacoes;
 
 	private String linkInformacoesTecnicasFornecedor;
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+	private String codigoInsumo = UUID.randomUUID().toString();
 
 	public Date getDataCadastro() {
 		return dataCadastro;
@@ -106,6 +94,14 @@ public class Insumo extends BaseEntity {
 
 	public void setLinkInformacoesTecnicasFornecedor(String linkInformacoesTecnicasFornecedor) {
 		this.linkInformacoesTecnicasFornecedor = linkInformacoesTecnicasFornecedor;
+	}
+
+	public String getCodigoInsumo() {
+		return codigoInsumo;
+	}
+
+	public void setCodigoInsumo(String codigoInsumo) {
+		this.codigoInsumo = codigoInsumo;
 	}
 
 }

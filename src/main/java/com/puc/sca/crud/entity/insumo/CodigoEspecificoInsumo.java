@@ -22,6 +22,10 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 
 	private static final long serialVersionUID = -5425802637883335902L;
 
+	/**
+	 * {@link Insumo}.
+	 */
+
 	@ManyToOne
 	private Insumo insumo;
 
@@ -31,6 +35,17 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 	private String placa;
 
 	private String numeroDeSerie;
+
+	public CodigoEspecificoInsumo() {
+	}
+
+	public CodigoEspecificoInsumo(String uuid) {
+		this.uuid = uuid;
+	}
+
+	/**
+	 * {@link AgendaManutencaoInsumo}.
+	 */
 
 	@OneToOne(mappedBy = "codigoEspecificoInsumo")
 	private AgendaManutencaoInsumo agendaManutencao;

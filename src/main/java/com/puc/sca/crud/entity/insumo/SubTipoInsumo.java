@@ -18,6 +18,13 @@ public class SubTipoInsumo extends BaseEntity {
 	@NotNull
 	private TipoInsumo tipoInsumo;
 
+	public SubTipoInsumo() {
+	}
+
+	public SubTipoInsumo(Long id) {
+		setId(id);
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}

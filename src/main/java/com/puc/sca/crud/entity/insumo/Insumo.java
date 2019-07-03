@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -32,18 +33,38 @@ public class Insumo extends BaseEntity {
 	@NotNull
 	private Date dataCadastro = new Date();
 
+	/**
+	 * {@link TipoInsumo}.
+	 */
+
 	@NotNull
 	@ManyToOne
 	private TipoInsumo tipoInsumo;
+
+	/**
+	 * {@link SubTipoInsumo}.
+	 */
 
 	@NotNull
 	@ManyToOne
 	private SubTipoInsumo subTipoInsumo;
 
+	public SubTipoInsumo getSubTipoInsumo() {
+		return subTipoInsumo;
+	}
+
+	public void setSubTipoInsumo(SubTipoInsumo subTipoInsumo) {
+		this.subTipoInsumo = subTipoInsumo;
+	}
+
+	/**
+	 * {@link TipoMarcaModelo}.
+	 */
+
 	@ManyToOne
 	private TipoMarcaModelo tipoMarcaModelo;
 
-	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<CodigoEspecificoInsumo> codigosEspecificosInsumo;
 
 	private String observacoes;
@@ -51,6 +72,14 @@ public class Insumo extends BaseEntity {
 	private String linkInformacoesTecnicasFornecedor;
 
 	private Integer quantidade;
+
+	/**
+	 * Construtor para instanciar os relacionamento no momento da deserialização.
+	 * 
+	 * @param tipoInsumo      - {@link TipoInsumo}
+	 * @param subTipoInsumo   - {@link SubTipoInsumo}
+	 * @param tipoMarcaModelo - {@link TipoMarcaModelo}
+	 */
 
 	@JsonCreator
 	public Insumo(@JsonProperty("tipoInsumo") TipoInsumo tipoInsumo,

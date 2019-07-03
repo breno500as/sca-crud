@@ -21,6 +21,13 @@ public class TipoMarcaModelo extends BaseEntity {
 	@NotNull
 	private SubTipoInsumo subTipoInsumo;
 
+	public TipoMarcaModelo() {
+	}
+
+	public TipoMarcaModelo(Long id) {
+		setId(id);
+	}
+
 	public String getMarca() {
 		return marca;
 	}

@@ -10,6 +10,13 @@ public class TipoInsumo extends BaseEntity {
 
 	private static final long serialVersionUID = -8021543420393541704L;
 
+	public TipoInsumo() {
+	}
+
+	public TipoInsumo(Long id) {
+		setId(id);
+	}
+
 	@NotNull
 	private String descricao;
 

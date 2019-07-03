@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.puc.sca.crud.dto.InsumoFornecedorDTO;
-import com.puc.sca.crud.entity.insumo.tipo.SubTipoInsumo;
+import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
 
 /**
  * API que integra com sistemas de terceiros para solicitar e acompanhar

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.puc.sca.crud.entity.AgendaManutencaoInsumo;
+import com.puc.sca.crud.entity.insumo.AgendaManutencaoInsumo;
 import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.repository.AgendaManutencaoInsumoRepository;
 

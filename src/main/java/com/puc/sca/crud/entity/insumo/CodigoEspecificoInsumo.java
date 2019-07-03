@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.crud.entity.AgendaManutencaoInsumo;
 import com.puc.sca.crud.entity.BaseEntity;
 
 /**

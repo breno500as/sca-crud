@@ -1,4 +1,4 @@
-package com.puc.sca.crud.entity.insumo.tipo;
+package com.puc.sca.crud.entity.insumo;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

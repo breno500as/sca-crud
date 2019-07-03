@@ -14,9 +14,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.puc.sca.crud.entity.BaseEntity;
-import com.puc.sca.crud.entity.insumo.tipo.SubTipoInsumo;
-import com.puc.sca.crud.entity.insumo.tipo.TipoInsumo;
-import com.puc.sca.crud.entity.insumo.tipo.TipoMarcaModelo;
 
 /**
  * Classe base para entidades de insumo principais da mineiradora: máquinas,

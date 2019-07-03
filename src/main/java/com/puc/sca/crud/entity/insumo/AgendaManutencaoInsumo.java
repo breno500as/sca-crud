@@ -1,4 +1,4 @@
-package com.puc.sca.crud.entity;
+package com.puc.sca.crud.entity.insumo;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
+import com.puc.sca.crud.entity.BaseEntity;
 import com.puc.sca.crud.enums.TipoManutencaoInsumo;
 
 /**

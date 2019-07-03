@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.puc.sca.crud.entity.AgendaManutencaoInsumo;
-import com.puc.sca.crud.entity.insumo.Insumo;
-import com.puc.sca.crud.entity.insumo.Veiculo;
+import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.repository.AgendaManutencaoInsumoRepository;
 
 @RestController
@@ -36,10 +35,10 @@ public class AgendaManutencaoController {
 	public String agendaManutencao(@RequestBody AgendaManutencaoInsumo agendaManutencaoInsumo) {
 
 		// TODO - Validações de data, campos obrigatórios, etc.
-		final Insumo insumo = this.entityManager.find(Insumo.class, agendaManutencaoInsumo.getInsumo().getId());
+		final CodigoEspecificoInsumo condigoEspecificoInsumo = this.entityManager.find(CodigoEspecificoInsumo.class, agendaManutencaoInsumo.getCodigoEspecificoInsumo().getId());
 
-		if (insumo.getAgendaManutencaoInsumo() != null) {
-			throw new RuntimeException("Esse insumo já possui um agendamento");
+		if (condigoEspecificoInsumo.getAgendaManutencao() != null) {
+			throw new RuntimeException("O insumo de código " + condigoEspecificoInsumo.getUuid() + " já possui um agendamento");
 		}
 
 		this.agendaManutencaoInsumoRepository.save(agendaManutencaoInsumo);

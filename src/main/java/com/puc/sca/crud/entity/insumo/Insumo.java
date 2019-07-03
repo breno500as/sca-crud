@@ -1,18 +1,21 @@
 package com.puc.sca.crud.entity.insumo;
 
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.crud.entity.AgendaManutencaoInsumo;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.puc.sca.crud.entity.BaseEntity;
-import com.puc.sca.crud.entity.insumo.tipo.TipoDescricaoInsumo;
+import com.puc.sca.crud.entity.insumo.tipo.SubTipoInsumo;
+import com.puc.sca.crud.entity.insumo.tipo.TipoInsumo;
 import com.puc.sca.crud.entity.insumo.tipo.TipoMarcaModelo;
 
 /**
@@ -34,19 +37,44 @@ public class Insumo extends BaseEntity {
 
 	@NotNull
 	@ManyToOne
-	private TipoDescricaoInsumo tipoDescricaoInsumo;
+	private TipoInsumo tipoInsumo;
+
+	@NotNull
+	@ManyToOne
+	private SubTipoInsumo subTipoInsumo;
 
 	@ManyToOne
 	private TipoMarcaModelo tipoMarcaModelo;
 
-	@OneToOne(mappedBy = "insumo")
-	private AgendaManutencaoInsumo agendaManutencaoInsumo;
+	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL)
+	private List<CodigoEspecificoInsumo> codigosEspecificosInsumo;
 
 	private String observacoes;
 
 	private String linkInformacoesTecnicasFornecedor;
 
-	private String codigoInsumo = UUID.randomUUID().toString();
+	private Integer quantidade;
+
+	@JsonCreator
+	public Insumo(@JsonProperty("tipoInsumo") TipoInsumo tipoInsumo,
+			@JsonProperty("subTipoInsumo") SubTipoInsumo subTipoInsumo,
+			@JsonProperty("tipoMarcaModelo") TipoMarcaModelo tipoMarcaModelo) {
+		this.tipoInsumo = tipoInsumo;
+		this.subTipoInsumo = subTipoInsumo;
+		this.tipoMarcaModelo = tipoMarcaModelo;
+	}
+
+	public Insumo() {
+
+	}
+
+	public List<CodigoEspecificoInsumo> getCodigosEspecificosInsumo() {
+		return codigosEspecificosInsumo;
+	}
+
+	public void setCodigosEspecificosInsumo(List<CodigoEspecificoInsumo> codigosEspecificosInsumo) {
+		this.codigosEspecificosInsumo = codigosEspecificosInsumo;
+	}
 
 	public Date getDataCadastro() {
 		return dataCadastro;
@@ -56,28 +84,12 @@ public class Insumo extends BaseEntity {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public TipoDescricaoInsumo getTipoDescricaoInsumo() {
-		return tipoDescricaoInsumo;
+	public TipoInsumo getTipoInsumo() {
+		return tipoInsumo;
 	}
 
-	public void setTipoDescricaoInsumo(TipoDescricaoInsumo tipoDescricaoInsumo) {
-		this.tipoDescricaoInsumo = tipoDescricaoInsumo;
-	}
-
-	public TipoMarcaModelo getTipoMarcaModelo() {
-		return tipoMarcaModelo;
-	}
-
-	public void setTipoMarcaModelo(TipoMarcaModelo tipoMarcaModelo) {
-		this.tipoMarcaModelo = tipoMarcaModelo;
-	}
-
-	public AgendaManutencaoInsumo getAgendaManutencaoInsumo() {
-		return agendaManutencaoInsumo;
-	}
-
-	public void setAgendaManutencaoInsumo(AgendaManutencaoInsumo agendaManutencaoInsumo) {
-		this.agendaManutencaoInsumo = agendaManutencaoInsumo;
+	public void setTipoInsumo(TipoInsumo tipoInsumo) {
+		this.tipoInsumo = tipoInsumo;
 	}
 
 	public String getObservacoes() {
@@ -96,12 +108,20 @@ public class Insumo extends BaseEntity {
 		this.linkInformacoesTecnicasFornecedor = linkInformacoesTecnicasFornecedor;
 	}
 
-	public String getCodigoInsumo() {
-		return codigoInsumo;
+	public Integer getQuantidade() {
+		return quantidade;
 	}
 
-	public void setCodigoInsumo(String codigoInsumo) {
-		this.codigoInsumo = codigoInsumo;
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public TipoMarcaModelo getTipoMarcaModelo() {
+		return tipoMarcaModelo;
+	}
+
+	public void setTipoMarcaModelo(TipoMarcaModelo tipoMarcaModelo) {
+		this.tipoMarcaModelo = tipoMarcaModelo;
 	}
 
 }

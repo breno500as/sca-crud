@@ -8,7 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.puc.sca.crud.entity.insumo.Insumo;
+import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.enums.TipoManutencaoInsumo;
 
 /**
@@ -25,7 +25,7 @@ public class AgendaManutencaoInsumo extends BaseEntity {
 
 	@NotNull
 	@OneToOne
-	private Insumo insumo;
+	private CodigoEspecificoInsumo codigoEspecificoInsumo;
 
 	@NotNull
 	private Date dataInicio;
@@ -62,20 +62,20 @@ public class AgendaManutencaoInsumo extends BaseEntity {
 		this.dataTermino = dataTermino;
 	}
 
-	public Insumo getInsumo() {
-		return insumo;
-	}
-
-	public void setInsumo(Insumo insumo) {
-		this.insumo = insumo;
-	}
-
 	public Boolean getManutencaoConcluida() {
 		return manutencaoConcluida;
 	}
 
 	public void setManutencaoConcluida(Boolean manutencaoConcluida) {
 		this.manutencaoConcluida = manutencaoConcluida;
+	}
+
+	public CodigoEspecificoInsumo getCodigoEspecificoInsumo() {
+		return codigoEspecificoInsumo;
+	}
+
+	public void setCodigoEspecificoInsumo(CodigoEspecificoInsumo codigoEspecificoInsumo) {
+		this.codigoEspecificoInsumo = codigoEspecificoInsumo;
 	}
 
 }

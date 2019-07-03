@@ -1,7 +1,8 @@
 package com.puc.sca.crud.entity.insumo.tipo;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.puc.sca.crud.entity.BaseEntity;
 
@@ -10,12 +11,15 @@ public class TipoMarcaModelo extends BaseEntity {
 
 	private static final long serialVersionUID = 7624651984961508447L;
 
+	@NotNull
 	private String marca;
 
+	@NotNull
 	private String modelo;
 
-	@OneToOne
-	private TipoDescricaoInsumo tipoDescricaoInsumo;
+	@ManyToOne
+	@NotNull
+	private SubTipoInsumo subTipoInsumo;
 
 	public String getMarca() {
 		return marca;
@@ -33,12 +37,12 @@ public class TipoMarcaModelo extends BaseEntity {
 		this.modelo = modelo;
 	}
 
-	public TipoDescricaoInsumo getTipoDescricaoInsumo() {
-		return tipoDescricaoInsumo;
+	public SubTipoInsumo getSubTipoInsumo() {
+		return subTipoInsumo;
 	}
 
-	public void setTipoDescricaoInsumo(TipoDescricaoInsumo tipoDescricaoInsumo) {
-		this.tipoDescricaoInsumo = tipoDescricaoInsumo;
+	public void setSubTipoInsumo(SubTipoInsumo subTipoInsumo) {
+		this.subTipoInsumo = subTipoInsumo;
 	}
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.puc.sca.crud.dto.InsumoFornecedorDTO;
-import com.puc.sca.crud.entity.insumo.tipo.TipoDescricaoInsumo;
+import com.puc.sca.crud.entity.insumo.tipo.SubTipoInsumo;
 
 /**
  * API que integra com sistemas de terceiros para solicitar e acompanhar
@@ -64,7 +64,7 @@ public class AquisicaoInsumoController {
 	 * com uma lista de objetos separados por fornecedor e preço, para comparativo e
 	 * futura aquisição.
 	 * 
-	 * @param tipoDescricaoInsumoId - {@link TipoDescricaoInsumo}
+	 * @param tipoDescricaoInsumoId - {@link SubTipoInsumo}
 	 * @return
 	 */
 

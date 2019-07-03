@@ -1,28 +1,21 @@
 package com.puc.sca.crud.entity.insumo.tipo;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.puc.sca.crud.entity.BaseEntity;
-import com.puc.sca.crud.enums.TipoInsumo;
-
-/**
- * Tipos específicos pré determinados de máquinas, veículos e instrumentos
- * topográficos.
- * 
- * @author Breno
- *
- */
 
 @Entity
-public class TipoDescricaoInsumo extends BaseEntity {
+public class SubTipoInsumo extends BaseEntity {
 
 	private static final long serialVersionUID = 7368127298635893508L;
 
+	@NotNull
 	private String descricao;
 
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
+	@NotNull
 	private TipoInsumo tipoInsumo;
 
 	public String getDescricao() {
@@ -40,6 +33,5 @@ public class TipoDescricaoInsumo extends BaseEntity {
 	public void setTipoInsumo(TipoInsumo tipoInsumo) {
 		this.tipoInsumo = tipoInsumo;
 	}
-
 
 }

@@ -17,8 +17,8 @@ import javax.validation.constraints.NotNull;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-	 
-
+	private static final long serialVersionUID = 2801824472519941160L;
+	
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)

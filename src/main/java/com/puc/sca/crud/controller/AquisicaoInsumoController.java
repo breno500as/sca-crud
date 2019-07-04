@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.puc.sca.crud.dto.InsumoFornecedorDTO;
 import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
 
@@ -25,7 +26,7 @@ import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
 @RestController
 @RequestMapping("aquisicoes-insumo")
 public class AquisicaoInsumoController {
-	
+
 	// Alguns possíveis fornecedores da mineiradora e suas APIs.
 
 	@Value("${url.integracao.forlan}")
@@ -81,9 +82,22 @@ public class AquisicaoInsumoController {
 	 * @return
 	 */
 
+	@HystrixCommand(fallbackMethod = "reliableComparativosPreco")
 	@GetMapping("comparativo-precos/{idTipoDescricaoInsumo}")
 	public List<Object> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
 		return new ArrayList<Object>();
+	}
+
+	/**
+	 * Método que será invocado em caso de falha do microserviço.
+	 * 
+	 * @return
+	 */
+
+	public List<Object> reliableComparativosPreco() {
+		List<Object> lista = new ArrayList<Object>();
+		lista.add("Escavadeira Jcb - 4CXECO - Preço R$30.000");
+		return lista;
 	}
 
 	/**
@@ -94,7 +108,8 @@ public class AquisicaoInsumoController {
 	 * @param numeroSolicitacao - número da solicitação de aquisição de insumo
 	 *                          retornado pelo sistema de aquisição dos fornecedores
 	 *                          pré cadastrados
-	 * @return um objeto com as informações para criação de uma tela de acompanhamento.
+	 * @return um objeto com as informações para criação de uma tela de
+	 *         acompanhamento.
 	 */
 
 	@GetMapping("informacoes-solicitacao/{numeroSolicitacao}")

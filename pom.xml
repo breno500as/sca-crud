@@ -30,6 +30,15 @@
 			</properties>
 		</profile>
 		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<id>test</id>
+			<properties>
+				<activatedProperties>test</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
 			<id>hml</id>
 			<properties>
 				<activatedProperties>hml</activatedProperties>

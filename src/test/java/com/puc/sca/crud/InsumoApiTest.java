@@ -47,7 +47,7 @@ public class InsumoApiTest {
 		insumo.setLinkInformacoesTecnicasFornecedor("http://www.google.com");
 		insumo.setQuantidade(2);
 
-		List<CodigoEspecificoInsumo> codigos = new ArrayList<CodigoEspecificoInsumo>();
+		final List<CodigoEspecificoInsumo> codigos = new ArrayList<CodigoEspecificoInsumo>();
 		codigos.add(new CodigoEspecificoInsumo(UUID.randomUUID().toString()));
 		codigos.add(new CodigoEspecificoInsumo(UUID.randomUUID().toString()));
 		insumo.setCodigosEspecificosInsumo(codigos);
@@ -57,7 +57,6 @@ public class InsumoApiTest {
 		this.mvc.perform(post("/insumos").contentType(MediaType.APPLICATION_JSON).content(s))
 				.andExpect(status().isCreated());
 
-		System.out.println("braminha");
 
 	}
 

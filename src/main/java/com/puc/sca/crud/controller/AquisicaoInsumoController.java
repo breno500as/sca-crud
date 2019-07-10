@@ -3,6 +3,8 @@ package com.puc.sca.crud.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,9 +84,17 @@ public class AquisicaoInsumoController {
 	 * @return
 	 */
 
-	@HystrixCommand(fallbackMethod = "reliableComparativosPreco")
+	
 	@GetMapping("comparativo-precos/{idTipoDescricaoInsumo}")
-	public List<Object> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
+	public List<Object> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId, HttpServletRequest request) {
+		List<Object> lista = new ArrayList<Object>();
+		lista.add("Escavadeira Hyundai - R220LC-9S - Preço R$90.000");
+		String token = request.getHeader("Authorization");
+		String idUsuario = request.getParameter("idUsuario");
+		String permissoes = request.getParameter("permissoes");
+		System.out.println(idUsuario);
+		System.out.println(token);
+		System.out.println(permissoes);
 		return new ArrayList<Object>();
 	}
 
@@ -94,9 +104,9 @@ public class AquisicaoInsumoController {
 	 * @return
 	 */
 
-	public List<Object> reliableComparativosPreco() {
+	public List<Object> reliableInformacoes() {
 		List<Object> lista = new ArrayList<Object>();
-		lista.add("Escavadeira Jcb - 4CXECO - Preço R$30.000");
+		lista.add("Informações..");
 		return lista;
 	}
 
@@ -112,6 +122,7 @@ public class AquisicaoInsumoController {
 	 *         acompanhamento.
 	 */
 
+	@HystrixCommand(fallbackMethod = "reliableInformacoes")
 	@GetMapping("informacoes-solicitacao/{numeroSolicitacao}")
 	public List<Object> informacoesSolicitacaoAquisicao(@PathVariable("numeroSolicitacao") String numeroSolicitacao) {
 		return new ArrayList<Object>();

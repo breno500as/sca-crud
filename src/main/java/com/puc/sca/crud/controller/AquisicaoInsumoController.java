@@ -90,11 +90,7 @@ public class AquisicaoInsumoController {
 		List<Object> lista = new ArrayList<Object>();
 		lista.add("Escavadeira Hyundai - R220LC-9S - Preço R$90.000");
 		String token = request.getHeader("Authorization");
-		String idUsuario = request.getParameter("idUsuario");
-		String permissoes = request.getParameter("permissoes");
-		System.out.println(idUsuario);
 		System.out.println(token);
-		System.out.println(permissoes);
 		return new ArrayList<Object>();
 	}
 

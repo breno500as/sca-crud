@@ -48,3 +48,6 @@ insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (15
 insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (16,'Geokon','4420',15);
 insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (17,'Dell','Inspiron',21);
 insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (18,'Autocad','1.0',22);
+
+insert into insumo (id, tipo_insumo_id, sub_tipo_insumo_id, tipo_marca_modelo_id, data_cadastro, quantidade, link_informacoes_tecnicas_fornecedor) values (70,1,1,1, now(), 1,'http://www.google.com');
+insert into insumo (id, tipo_insumo_id, sub_tipo_insumo_id, tipo_marca_modelo_id, data_cadastro, quantidade, link_informacoes_tecnicas_fornecedor) values (80,2,6,7, now(), 1,'http://www.gmail.com');

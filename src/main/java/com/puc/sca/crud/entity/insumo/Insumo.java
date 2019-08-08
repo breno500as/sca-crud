@@ -10,6 +10,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -72,6 +73,9 @@ public class Insumo extends BaseEntity {
 	private String linkInformacoesTecnicasFornecedor;
 
 	private Integer quantidade;
+
+	@Transient
+	private Long totalElementos;
 
 	/**
 	 * Construtor para instanciar os relacionamento no momento da deserialização.
@@ -148,6 +152,14 @@ public class Insumo extends BaseEntity {
 
 	public void setTipoMarcaModelo(TipoMarcaModelo tipoMarcaModelo) {
 		this.tipoMarcaModelo = tipoMarcaModelo;
+	}
+
+	public Long getTotalElementos() {
+		return totalElementos;
+	}
+
+	public void setTotalElementos(Long totalElementos) {
+		this.totalElementos = totalElementos;
 	}
 
 }

@@ -19,7 +19,7 @@ import com.puc.sca.crud.repository.AgendaManutencaoInsumoRepository;
 public class AgendaManutencaoController {
 
 	@Autowired
-	private AgendaManutencaoInsumoRepository agendaManutencaoInsumoRepository;
+	private AgendaManutencaoInsumoRepository repository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -41,7 +41,7 @@ public class AgendaManutencaoController {
 			throw new RuntimeException("O insumo de código " + condigoEspecificoInsumo.getUuid() + " já possui um agendamento");
 		}
 
-		this.agendaManutencaoInsumoRepository.save(agendaManutencaoInsumo);
+		this.repository.save(agendaManutencaoInsumo);
 
 		return "ok";
 	}

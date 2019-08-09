@@ -41,7 +41,7 @@ public class InsumoController {
 		Insumo insumoDB = this.repository.findById(id).get();
 		insumoDB.setTipoInsumo(insumo.getTipoInsumo());
 		insumoDB.setSubTipoInsumo(insumo.getSubTipoInsumo());
-		insumoDB.setTipoMarcaModelo(insumo.getTipoMarcaModelo());
+		insumoDB.setTipoMarcaModelo(insumo.getTipoMarcaModelo().getId() == null ? null : insumo.getTipoMarcaModelo());
 		insumoDB.setQuantidade(insumo.getQuantidade());
 		insumoDB.setLinkInformacoesTecnicasFornecedor(insumo.getLinkInformacoesTecnicasFornecedor());
 		insumoDB.setObservacoes(insumo.getObservacoes());
@@ -66,7 +66,7 @@ public class InsumoController {
 			                        @RequestParam("size") Integer size,
 			                        @RequestParam(value = "tipoInsumo", required = false) Long tipoInsumo,
 			                        @RequestParam(name = "sort", defaultValue = "id") String sort) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+		Pageable pageable = PageRequest.of(page -1, size, Sort.by(sort));
 		
 		Page<Insumo> result =  null;
 		

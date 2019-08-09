@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,12 @@ public class InsumoController {
 		return this.repository.save(insumoDB);
 	}
 	
+	@DeleteMapping("{id}")
+	public void delete(@PathVariable(value = "id") Long id) {
+		Insumo insumo = this.repository.findById(id).get();
+		this.repository.delete(insumo);
+	}
+	
 	@GetMapping("{id}")
 	public Insumo findById(@PathVariable(value = "id") Long id) {
 		
@@ -78,7 +85,10 @@ public class InsumoController {
 		
 		if (result.get() != null) {
 			List<Insumo> insumos = result.get().collect(Collectors.toList());
-			insumos.get(0).setTotalElementos(result.getTotalElements());
+			if (insumos.size() > 0) {
+				insumos.get(0).setTotalElementos(result.getTotalElements());
+			}
+			
 			return insumos;
 		}
 		

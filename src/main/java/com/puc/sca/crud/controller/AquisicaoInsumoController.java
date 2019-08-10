@@ -3,8 +3,6 @@ package com.puc.sca.crud.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,11 +84,7 @@ public class AquisicaoInsumoController {
 
 	
 	@GetMapping("comparativo-precos/{idTipoDescricaoInsumo}")
-	public List<Object> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId, HttpServletRequest request) {
-		List<Object> lista = new ArrayList<Object>();
-		lista.add("Escavadeira Hyundai - R220LC-9S - Preço R$90.000");
-		String token = request.getHeader("Authorization");
-		System.out.println(token);
+	public List<Object> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
 		return new ArrayList<Object>();
 	}
 

@@ -1,7 +1,5 @@
 package com.puc.sca.crud.entity.insumo;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -30,17 +28,18 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 	private Insumo insumo;
 
 	@NotNull
-	private String uuid;
-
-	private String placa;
-
-	private String numeroDeSerie;
+	private String codigo;
 
 	public CodigoEspecificoInsumo() {
 	}
 
-	public CodigoEspecificoInsumo(String uuid) {
-		this.uuid = uuid;
+	public CodigoEspecificoInsumo(Insumo insumo, String codigo) {
+		this.codigo = codigo;
+		this.insumo = insumo;
+	}
+
+	public CodigoEspecificoInsumo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	/**
@@ -58,30 +57,6 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 		this.insumo = insumo;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getPlaca() {
-		return placa;
-	}
-
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
-
-	public String getNumeroDeSerie() {
-		return numeroDeSerie;
-	}
-
-	public void setNumeroDeSerie(String numeroDeSerie) {
-		this.numeroDeSerie = numeroDeSerie;
-	}
-
 	public AgendaManutencaoInsumo getAgendaManutencao() {
 		return agendaManutencao;
 	}
@@ -90,7 +65,11 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 		this.agendaManutencao = agendaManutencao;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(UUID.randomUUID().toString());
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 }

@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.puc.sca.crud.entity.BaseEntity;
 
@@ -65,7 +66,8 @@ public class Insumo extends BaseEntity {
 	@ManyToOne
 	private TipoMarcaModelo tipoMarcaModelo;
 
-	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CodigoEspecificoInsumo> codigosEspecificosInsumo;
 
 	private String observacoes;
@@ -76,6 +78,9 @@ public class Insumo extends BaseEntity {
 
 	@Transient
 	private Long totalElementos;
+	
+	@Transient
+	private String codigosConcatenadosInsumo;
 
 	/**
 	 * Construtor para instanciar os relacionamento no momento da deserialização.
@@ -160,6 +165,14 @@ public class Insumo extends BaseEntity {
 
 	public void setTotalElementos(Long totalElementos) {
 		this.totalElementos = totalElementos;
+	}
+	
+	public String getCodigosConcatenadosInsumo() {
+		return codigosConcatenadosInsumo;
+	}
+	
+	public void setCodigosConcatenadosInsumo(String codigosConcatenadosInsumo) {
+		this.codigosConcatenadosInsumo = codigosConcatenadosInsumo;
 	}
 
 }

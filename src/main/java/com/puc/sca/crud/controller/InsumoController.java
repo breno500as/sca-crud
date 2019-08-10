@@ -1,10 +1,13 @@
 package com.puc.sca.crud.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.entity.insumo.Insumo;
 import com.puc.sca.crud.entity.insumo.TipoInsumo;
+import com.puc.sca.crud.repository.CodigoEspecificoInsumoRepository;
 import com.puc.sca.crud.repository.InsumoRepository;
 
 @RestController
@@ -29,40 +34,66 @@ import com.puc.sca.crud.repository.InsumoRepository;
 public class InsumoController {
 
 	@Autowired
-	private InsumoRepository repository;
+	private InsumoRepository insumoRepository;
+	
+	@Autowired
+	private CodigoEspecificoInsumoRepository codigoEspecificoInsumoRespository;
+	
+	 
 
 	@PostMapping
 	public Insumo save(@RequestBody Insumo insumo) {
-		return this.repository.save(insumo);
+		
+		if (insumo.getCodigosConcatenadosInsumo() != null && !insumo.getCodigosConcatenadosInsumo().isEmpty()) {
+			 this.saveCodigoEspecificoInsumo(insumo);
+		} 
+		
+		return this.insumoRepository.save(insumo);
 	}
+	
+
 	
 	@PutMapping("{id}")
 	public Insumo update(@PathVariable(value = "id") Long id, @RequestBody Insumo insumo) {
 		 
-		Insumo insumoDB = this.repository.findById(id).get();
-		insumoDB.setTipoInsumo(insumo.getTipoInsumo());
-		insumoDB.setSubTipoInsumo(insumo.getSubTipoInsumo());
+		Insumo insumoDB = this.insumoRepository.findById(id).get();
+		
+		BeanUtils.copyProperties(insumo, insumoDB);
 		insumoDB.setTipoMarcaModelo(insumo.getTipoMarcaModelo().getId() == null ? null : insumo.getTipoMarcaModelo());
-		insumoDB.setQuantidade(insumo.getQuantidade());
-		insumoDB.setLinkInformacoesTecnicasFornecedor(insumo.getLinkInformacoesTecnicasFornecedor());
-		insumoDB.setObservacoes(insumo.getObservacoes());
    	
-		return this.repository.save(insumoDB);
+		if (insumo.getCodigosConcatenadosInsumo() != null && !insumo.getCodigosConcatenadosInsumo().isEmpty()) {
+			 
+			 List<CodigoEspecificoInsumo> codigosEspecificosDelete = this.codigoEspecificoInsumoRespository.findAllByInsumo(insumoDB);
+			 if (codigosEspecificosDelete != null && !codigosEspecificosDelete.isEmpty()) {
+				  this.codigoEspecificoInsumoRespository.deleteAll(codigosEspecificosDelete);
+			 }
+			
+			 this.saveCodigoEspecificoInsumo(insumoDB);
+		}
+		
+		return this.insumoRepository.save(insumoDB);
 	}
 	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable(value = "id") Long id) {
-		Insumo insumo = this.repository.findById(id).get();
-		this.repository.delete(insumo);
+		Insumo insumo = this.insumoRepository.findById(id).get();
+		this.insumoRepository.delete(insumo);
 	}
 	
 	@GetMapping("{id}")
 	public Insumo findById(@PathVariable(value = "id") Long id) {
 		
-		Optional<Insumo> optional = this.repository.findById(id);
+		Optional<Insumo> optional = this.insumoRepository.findById(id);
 
 		if (optional.isPresent()) {
-			return optional.get();
+			Insumo insumo = optional.get();
+			
+			if (insumo.getCodigosEspecificosInsumo() != null && !insumo.getCodigosEspecificosInsumo().isEmpty()) {
+				insumo.setCodigosConcatenadosInsumo(insumo.getCodigosEspecificosInsumo().stream().map(c -> c.getCodigo()).collect(Collectors.joining(",")));
+			}
+			
+			return insumo;
+			
 		}
 		return null;
 	}
@@ -78,9 +109,9 @@ public class InsumoController {
 		Page<Insumo> result =  null;
 		
 		if (tipoInsumo != null) {
-			result = this.repository.findAllByTipoInsumo(new TipoInsumo(tipoInsumo), pageable);
+			result = this.insumoRepository.findAllByTipoInsumo(new TipoInsumo(tipoInsumo), pageable);
 		} else {
-			result =  this.repository.findAll(pageable);
+			result =  this.insumoRepository.findAll(pageable);
 		}
 		
 		if (result.get() != null) {
@@ -95,5 +126,16 @@ public class InsumoController {
 		return Collections.emptyList();
 		
 	}
+	
+	private void saveCodigoEspecificoInsumo(Insumo insumo) {
+		 if (insumo.getCodigosConcatenadosInsumo().contains(",")) {
+			 insumo.setCodigosEspecificosInsumo((Arrays.asList(insumo.getCodigosConcatenadosInsumo().split(",")).stream().map(codigo -> new CodigoEspecificoInsumo(insumo,codigo)).collect(Collectors.toList())));
+		 } else {
+			 insumo.setCodigosEspecificosInsumo(new ArrayList<CodigoEspecificoInsumo>());
+			 insumo.getCodigosEspecificosInsumo().add(new CodigoEspecificoInsumo(insumo,insumo.getCodigosConcatenadosInsumo()));
+		 }
+		
+	}
+	
 
 }

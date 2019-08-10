@@ -1,7 +1,6 @@
 package com.puc.sca.crud.controller;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,16 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.puc.sca.crud.entity.insumo.AgendaManutencaoInsumo;
 import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.repository.AgendaManutencaoInsumoRepository;
+import com.puc.sca.crud.repository.CodigoEspecificoInsumoRepository;
 
 @RestController
 @RequestMapping("agendas-manutencao")
 public class AgendaManutencaoController {
 
 	@Autowired
-	private AgendaManutencaoInsumoRepository repository;
+	private AgendaManutencaoInsumoRepository agendaManutencaorepository;
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private CodigoEspecificoInsumoRepository codigoEspecificoInsumoRespository;
 
 	/**
 	 * Método para o agendamento de manutenção para os insumos.
@@ -35,13 +35,13 @@ public class AgendaManutencaoController {
 	public String agendaManutencao(@RequestBody AgendaManutencaoInsumo agendaManutencaoInsumo) {
 
 		// TODO - Validações de data, campos obrigatórios, etc.
-		final CodigoEspecificoInsumo condigoEspecificoInsumo = this.entityManager.find(CodigoEspecificoInsumo.class, agendaManutencaoInsumo.getCodigoEspecificoInsumo().getId());
+		final Optional<CodigoEspecificoInsumo> condigoEspecificoInsumo = this.codigoEspecificoInsumoRespository.findById(agendaManutencaoInsumo.getCodigoEspecificoInsumo().getId());
 
-		if (condigoEspecificoInsumo.getAgendaManutencao() != null) {
-			throw new RuntimeException("O insumo de código " + condigoEspecificoInsumo.getUuid() + " já possui um agendamento");
+		if (condigoEspecificoInsumo.isPresent()) {
+			throw new RuntimeException("O insumo de código " + condigoEspecificoInsumo.get().getCodigo()+ " já possui um agendamento");
 		}
 
-		this.repository.save(agendaManutencaoInsumo);
+		this.agendaManutencaorepository.save(agendaManutencaoInsumo);
 
 		return "ok";
 	}

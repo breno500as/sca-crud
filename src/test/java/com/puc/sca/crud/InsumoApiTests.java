@@ -28,7 +28,7 @@ import com.puc.sca.crud.entity.insumo.TipoMarcaModelo;
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 @ActiveProfiles({ "dev", "test", "hml" })
-public class InsumoApiTest {
+public class InsumoApiTests {
 
 	@Autowired
 	private MockMvc mvc;

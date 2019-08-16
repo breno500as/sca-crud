@@ -12,7 +12,7 @@ services:
          - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE 
          
   crud-web:
-    image: crud-web:v17
+    image: crud-web:v20
     network_mode: bridge
     container_name: crud-web
     expose:

@@ -16,7 +16,7 @@ import com.puc.sca.crud.dto.InsumoFornecedorDTO;
 import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
 
 /**
- * API que integra com sistemas de terceiros para solicitar e acompanhar
+ * Rest controller que integra com sistemas de terceiros para solicitar e acompanhar
  * solicitações de insumos.
  * 
  * @author breno

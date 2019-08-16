@@ -29,6 +29,12 @@ import com.puc.sca.crud.entity.insumo.TipoInsumo;
 import com.puc.sca.crud.repository.CodigoEspecificoInsumoRepository;
 import com.puc.sca.crud.repository.InsumoRepository;
 
+/**
+ * Rest controller para o crud de insumos.
+ * @author breno
+ *
+ */
+
 @RestController
 @RequestMapping("insumos")
 public class InsumoController {

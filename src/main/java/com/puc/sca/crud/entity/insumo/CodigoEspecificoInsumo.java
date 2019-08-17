@@ -32,6 +32,11 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 
 	public CodigoEspecificoInsumo() {
 	}
+	
+	public CodigoEspecificoInsumo(Long id) {
+	  this.id = id;
+	}
+	
 
 	public CodigoEspecificoInsumo(Insumo insumo, String codigo) {
 		this.codigo = codigo;

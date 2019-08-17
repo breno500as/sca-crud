@@ -24,26 +24,28 @@ public class AgendaManutencaoController {
 	@Autowired
 	private CodigoEspecificoInsumoRepository codigoEspecificoInsumoRespository;
 
-	/**
-	 * Método para o agendamento de manutenção para os insumos.
-	 * 
-	 * @param agendaManutencaoInsumo - {@link AgendaManutencaoInsumo}.
-	 * @return - {@link Veiculo }
-	 */
 	@PostMapping
 	@ResponseBody
-	public String agendaManutencao(@RequestBody AgendaManutencaoInsumo agendaManutencaoInsumo) {
+	public void agendaManutencao(@RequestBody AgendaManutencaoInsumo agendaManutencaoInsumo) {
+		
+		final Optional<CodigoEspecificoInsumo> codigoEspecificoInsumo = this.codigoEspecificoInsumoRespository.findByCodigo(agendaManutencaoInsumo.getCodigoEspecificoInsumo().getCodigo());
+		
+		if (!codigoEspecificoInsumo.isPresent()) {
+			throw new RuntimeException("Não foi encontrado um código de insumo com o valor: " + agendaManutencaoInsumo.getCodigoEspecificoInsumo().getCodigo());
+		}
+		
+		CodigoEspecificoInsumo c = codigoEspecificoInsumo.get();
 
-		// TODO - Validações de data, campos obrigatórios, etc.
-		final Optional<CodigoEspecificoInsumo> condigoEspecificoInsumo = this.codigoEspecificoInsumoRespository.findById(agendaManutencaoInsumo.getCodigoEspecificoInsumo().getId());
+		// TODO - Validações de data, campos obrigatórios, filtrar pelo período informado etc.
+		final Optional<AgendaManutencaoInsumo> insumoJaAgendado = this.agendaManutencaorepository.findByCodigoEspecificoInsumo(new CodigoEspecificoInsumo(c.getId()));
 
-		if (condigoEspecificoInsumo.isPresent()) {
-			throw new RuntimeException("O insumo de código " + condigoEspecificoInsumo.get().getCodigo()+ " já possui um agendamento");
+		if (insumoJaAgendado.isPresent()) {
+			throw new RuntimeException("O insumo de código " + codigoEspecificoInsumo.get().getCodigo()+ " já possui um agendamento para o período informado");
 		}
 
+		agendaManutencaoInsumo.setCodigoEspecificoInsumo(c);
 		this.agendaManutencaorepository.save(agendaManutencaoInsumo);
 
-		return "ok";
 	}
 
 }

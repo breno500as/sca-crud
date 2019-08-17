@@ -48,7 +48,7 @@ public class AquisicaoInsumoController {
 	 */
 
 	@PostMapping
-	public String solitaAquisicaoInsumo(@RequestBody InsumoFornecedorDTO insumoFornecedorDTO) {
+	public void solitaAquisicaoInsumo(@RequestBody InsumoFornecedorDTO insumoFornecedorDTO) {
 
 		switch (insumoFornecedorDTO.getFornecedor()) {
 
@@ -69,8 +69,6 @@ public class AquisicaoInsumoController {
 		default:
 			break;
 		}
-
-		return "ok";
 	}
 
 	/**

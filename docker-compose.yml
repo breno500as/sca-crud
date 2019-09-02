@@ -10,7 +10,7 @@ services:
     ports:
       - '8081:8081'
     depends_on:
-      - api-gateway-db
+      - crud-db
     environment:
     - PORT=8081
     - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
@@ -25,4 +25,4 @@ services:
          - POSTGRES_DB=sca-security
          - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
          
- #SPRING_PROFILES_ACTIVE=hml docker-compose up --build
+ #SPRING_PROFILES_ACTIVE=test docker-compose up --build

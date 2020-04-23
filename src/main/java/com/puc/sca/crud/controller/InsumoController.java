@@ -29,6 +29,13 @@ import com.puc.sca.crud.entity.insumo.TipoInsumo;
 import com.puc.sca.crud.repository.CodigoEspecificoInsumoRepository;
 import com.puc.sca.crud.repository.InsumoRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * Rest controller para o crud de insumos.
  * @author breno
@@ -37,6 +44,7 @@ import com.puc.sca.crud.repository.InsumoRepository;
 
 @RestController
 @RequestMapping("insumos")
+@Tag(name = "insumos", description = "API crud de insumos")
 public class InsumoController {
 
 	@Autowired
@@ -45,9 +53,12 @@ public class InsumoController {
 	@Autowired
 	private CodigoEspecificoInsumoRepository codigoEspecificoInsumoRespository;
 	
-	 
-
 	@PostMapping
+	@Operation(summary = "Salva o insumo", description = "Recebe um insumo para persistência", tags = { "insumos" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Insumo criado", content = @Content(schema = @Schema(implementation = Insumo.class))),
+			@ApiResponse(responseCode = "400", description = "Invalid input"),
+			@ApiResponse(responseCode = "409", description = "Insumo já existe") })
 	public Insumo save(@RequestBody Insumo insumo) {
 		
 		if (insumo.getCodigosConcatenadosInsumo() != null && !insumo.getCodigosConcatenadosInsumo().isEmpty()) {
@@ -58,8 +69,12 @@ public class InsumoController {
 	}
 	
 
-	
 	@PutMapping("{id}")
+	@Operation(summary = "Atualiza o insumo", description = "Recebe um insumo e o id do insumo para persistência", tags = { "insumos" })
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Insumo atualizado"),
+			@ApiResponse(responseCode = "400", description = "Id inválido"),
+			@ApiResponse(responseCode = "404", description = "Insumo não encontrado"),
+			@ApiResponse(responseCode = "405", description = "Validation exception") })
 	public Insumo update(@PathVariable(value = "id") Long id, @RequestBody Insumo insumo) {
 		 
 		Insumo insumoDB = this.insumoRepository.findById(id).get();
@@ -81,12 +96,21 @@ public class InsumoController {
 	}
 	
 	@DeleteMapping("{id}")
+	@Operation(summary = "Deleta um insumo", description = "", tags = { "insumos" })
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "sucesso"),
+			@ApiResponse(responseCode = "404", description = "insumo não encontrado") })
 	public void delete(@PathVariable(value = "id") Long id) {
 		Insumo insumo = this.insumoRepository.findById(id).get();
 		this.insumoRepository.delete(insumo);
 	}
 	
+	
+	
 	@GetMapping("{id}")
+	@Operation(summary = "Encontra o insumo pelo ID", description = "Returna um único insumo", tags = { "insumos" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "sucesso", content = @Content(schema = @Schema(implementation = Insumo.class))),
+			@ApiResponse(responseCode = "404", description = "Insumo não encontrado") })
 	public Insumo findById(@PathVariable(value = "id") Long id) {
 		
 		Optional<Insumo> optional = this.insumoRepository.findById(id);
@@ -106,6 +130,10 @@ public class InsumoController {
 	
 
 	@GetMapping
+	@Operation(summary = "Recupera os insumos", description = "Retorna os insumos de acordo com o tamanho da página", tags = { "insumos" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "sucesso", content = @Content(schema = @Schema(implementation = Insumo.class))),
+			@ApiResponse(responseCode = "404", description = "Insumo não encontrado") })
 	public Iterable<Insumo> findAll(@RequestParam("page") Integer page, 
 			                        @RequestParam("size") Integer size,
 			                        @RequestParam(value = "tipoInsumo", required = false) Long tipoInsumo,

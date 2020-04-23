@@ -83,7 +83,7 @@ public class Insumo extends BaseEntity {
 	private String codigosConcatenadosInsumo;
 
 	/**
-	 * Construtor para instanciar os relacionamento no momento da deserialização.
+	 * Construtor para instanciar os relacionamentos no momento da deserialização.
 	 * 
 	 * @param tipoInsumo      - {@link TipoInsumo}
 	 * @param subTipoInsumo   - {@link SubTipoInsumo}

@@ -3,6 +3,7 @@ package com.puc.sca.crud.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ public class TipoMarcaModeloController {
 	private TipoMarcaModeloRepository repository;
 
 	@GetMapping
+	@Cacheable("tipos-marca-modelo")
 	public List<TipoMarcaModelo> findAllBySubTipoInsumo(@RequestParam("subTipoInsumo") Long subTipoInsumo) {
 		return this.repository.findBySubTipoInsumo(new SubTipoInsumo(subTipoInsumo));
 	}

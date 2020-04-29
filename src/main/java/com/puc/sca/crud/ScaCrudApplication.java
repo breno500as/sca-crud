@@ -8,8 +8,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 
 /**
- * SpringFox é um plugin que implementa a especificação do Swagger 2 e permite que 
- * a documentação seja atualizada de forma automática após qualquer modificação na API.
+ * springdoc-openapi-ui é uma dependência que pode ser adicionada no projeto para gerar
+ * a documentação utilizando o padrão OpenAPI 3 e o Swagger
  * 
  * 1 - Configurar as dependências requeridas do plugin spring open api no pom.xml
  * 2 - Acessar a url da documentação: http://127.0.0.1:8081/crud/swagger-ui.html

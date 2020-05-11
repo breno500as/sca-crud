@@ -2,7 +2,6 @@ package com.puc.sca.crud.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.entity.insumo.Insumo;
@@ -46,7 +47,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("insumos")
 @Tag(name = "insumos", description = "API crud de insumos")
 public class InsumoController {
-
+	
 	@Autowired
 	private InsumoRepository insumoRepository;
 	
@@ -77,7 +78,15 @@ public class InsumoController {
 			@ApiResponse(responseCode = "405", description = "Validation exception") })
 	public Insumo update(@PathVariable(value = "id") Long id, @RequestBody Insumo insumo) {
 		 
-		Insumo insumoDB = this.insumoRepository.findById(id).get();
+		Optional<Insumo> insumoOptional = this.insumoRepository.findById(id);
+		
+		Insumo insumoDB = null;
+		
+		if (insumoOptional.isPresent()) {
+			insumoDB = insumoOptional.get();
+		} else {
+			 throw new HttpServerErrorException(HttpStatus.EXPECTATION_FAILED);
+		}
 		
 		BeanUtils.copyProperties(insumo, insumoDB);
 		insumoDB.setTipoMarcaModelo(insumo.getTipoMarcaModelo().getId() == null ? null : insumo.getTipoMarcaModelo());
@@ -100,7 +109,16 @@ public class InsumoController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "sucesso"),
 			@ApiResponse(responseCode = "404", description = "insumo não encontrado") })
 	public void delete(@PathVariable(value = "id") Long id) {
-		Insumo insumo = this.insumoRepository.findById(id).get();
+		Optional<Insumo> insumoOptional = this.insumoRepository.findById(id);
+		
+        Insumo insumo = null;
+		
+		if (insumoOptional.isPresent()) {
+			insumo = insumoOptional.get();
+		} else {
+			 throw new HttpServerErrorException(HttpStatus.EXPECTATION_FAILED);
+		}
+		
 		this.insumoRepository.delete(insumo);
 	}
 	
@@ -119,7 +137,7 @@ public class InsumoController {
 			Insumo insumo = optional.get();
 			
 			if (insumo.getCodigosEspecificosInsumo() != null && !insumo.getCodigosEspecificosInsumo().isEmpty()) {
-				insumo.setCodigosConcatenadosInsumo(insumo.getCodigosEspecificosInsumo().stream().map(c -> c.getCodigo()).collect(Collectors.joining(",")));
+				insumo.setCodigosConcatenadosInsumo(insumo.getCodigosEspecificosInsumo().stream().map(CodigoEspecificoInsumo :: getCodigo).collect(Collectors.joining(",")));
 			}
 			
 			return insumo;
@@ -138,27 +156,22 @@ public class InsumoController {
 			                        @RequestParam("size") Integer size,
 			                        @RequestParam(value = "tipoInsumo", required = false) Long tipoInsumo,
 			                        @RequestParam(name = "sort", defaultValue = "id") String sort) {
-		Pageable pageable = PageRequest.of(page -1, size, Sort.by(sort));
-		
-		Page<Insumo> result =  null;
-		
+		Pageable pageable = PageRequest.of(page - 1, size, Sort.by(sort));
+
+		Page<Insumo> result = null;
+
 		if (tipoInsumo != null) {
 			result = this.insumoRepository.findAllByTipoInsumo(new TipoInsumo(tipoInsumo), pageable);
 		} else {
-			result =  this.insumoRepository.findAll(pageable);
+			result = this.insumoRepository.findAll(pageable);
 		}
-		
-		if (result.get() != null) {
-			List<Insumo> insumos = result.get().collect(Collectors.toList());
-			if (insumos.size() > 0) {
-				insumos.get(0).setTotalElementos(result.getTotalElements());
-			}
-			
-			return insumos;
+
+		List<Insumo> insumos = result.get().collect(Collectors.toList());
+		if (!insumos.isEmpty()) {
+			insumos.get(0).setTotalElementos(result.getTotalElements());
 		}
-		
-		return Collections.emptyList();
-		
+
+		return insumos;
 	}
 	
 	private void saveCodigoEspecificoInsumo(Insumo insumo) {

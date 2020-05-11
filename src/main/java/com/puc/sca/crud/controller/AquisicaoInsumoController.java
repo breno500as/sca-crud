@@ -1,8 +1,11 @@
 package com.puc.sca.crud.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.puc.sca.crud.dto.InsumoFornecedorDTO;
 import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
+import com.puc.sca.crud.enums.Fornecedor;
 
 /**
  * Rest controller que integra com sistemas de terceiros para solicitar e acompanhar
@@ -37,6 +41,11 @@ public class AquisicaoInsumoController {
 
 	@Value("${url.integracao.bercam}")
 	private String bercam;
+	
+	private static final Logger logger = LogManager.getLogger(AquisicaoInsumoController.class);
+
+	 
+	
 
 	/**
 	 * Solicita um insumo para um fornecedor, se disponível o sistema de aquisições
@@ -52,18 +61,17 @@ public class AquisicaoInsumoController {
 
 		switch (insumoFornecedorDTO.getFornecedor()) {
 
-		// TODO - recuperar do profile o endereço dos sistemas de aquisições, tratar
-		// exceções, criar tabela de acompanhamentos, etc.
+		// TODO - recuperar do profile o endereço dos sistemas de aquisições, tratar exceções, criar tabela de acompanhamentos, etc.
 		case FURLAN:
-
+			logger.info(Fornecedor.FURLAN);
 			break;
 
 		case BRASTORNO:
-
+			logger.info(Fornecedor.BRASTORNO);
 			break;
 
 		case BERCAM:
-
+			logger.info(Fornecedor.BERCAM);
 			break;
 
 		default:
@@ -81,9 +89,10 @@ public class AquisicaoInsumoController {
 	 */
 
 	
+ 
 	@GetMapping("comparativo-precos/{idTipoDescricaoInsumo}")
-	public List<Object> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
-		return new ArrayList<Object>();
+	public List<String> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
+		return Collections.emptyList();
 	}
 
 	/**
@@ -92,8 +101,8 @@ public class AquisicaoInsumoController {
 	 * @return
 	 */
 
-	public List<Object> reliableInformacoes() {
-		List<Object> lista = new ArrayList<Object>();
+	public List<String> reliableInformacoes() {
+		List<String> lista = new ArrayList<>();
 		lista.add("Informações..");
 		return lista;
 	}
@@ -112,8 +121,8 @@ public class AquisicaoInsumoController {
 
 	@HystrixCommand(fallbackMethod = "reliableInformacoes")
 	@GetMapping("informacoes-solicitacao/{numeroSolicitacao}")
-	public List<Object> informacoesSolicitacaoAquisicao(@PathVariable("numeroSolicitacao") String numeroSolicitacao) {
-		return new ArrayList<Object>();
+	public List<String> informacoesSolicitacaoAquisicao(@PathVariable("numeroSolicitacao") String numeroSolicitacao) {
+		return Collections.emptyList();
 	}
 
 }

@@ -13,7 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 2 - Acessar a url da documentação: http://127.0.0.1:8081/crud/swagger-ui.html
  * json: http://127.0.0.1:8081/crud/v3/api-docs
  * 
- * sonarqube
+ * sonarqube server
  * 1 - docker pull sonarqube
  * 2 - docker run -p 9000:9000 sonarqube
  * 3 - http://localhost:9000 
@@ -25,8 +25,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 		<sonar.login>admin</sonar.login>
 		<sonar.password>admin</sonar.password>
 	</properties>
- * 
- * sonarlint
+ * 6 - Executar mvn compile sonar:sonar
+ * 7 - Opcional configurar regras do sonar no eclipse: Window > Preferences > SonarLint > Rules Configuration
+ 
+ * sonarlint plugin
  * 1 - Adicionar o plugin do eclipse
  * 2 - clicar com o botão direito no projeto ir em SonarLint, depois clicar em analyze
  * @author Breno

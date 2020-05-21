@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.puc.sca.crud.entity.insumo.CodigoEspecificoInsumo;
 import com.puc.sca.crud.entity.insumo.Insumo;
@@ -65,8 +67,17 @@ public class InsumoController {
 		if (insumo.getCodigosConcatenadosInsumo() != null && !insumo.getCodigosConcatenadosInsumo().isEmpty()) {
 			 this.saveCodigoEspecificoInsumo(insumo);
 		} 
+ 
 		
 		return this.insumoRepository.save(insumo);
+	}
+	
+	
+	@PostMapping("/upload")
+	public void handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+		// file.getBytes();
+		redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+
 	}
 	
 
@@ -130,7 +141,7 @@ public class InsumoController {
 			@ApiResponse(responseCode = "200", description = "sucesso", content = @Content(schema = @Schema(implementation = Insumo.class))),
 			@ApiResponse(responseCode = "404", description = "Insumo não encontrado") })
 	public Insumo findById(@PathVariable(value = "id") Long id) {
-		
+	 
 		Optional<Insumo> optional = this.insumoRepository.findById(id);
 
 		if (optional.isPresent()) {

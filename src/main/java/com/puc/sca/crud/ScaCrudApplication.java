@@ -9,11 +9,14 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * springdoc-openapi-ui é uma dependência que pode ser adicionada no projeto para gerar a documentação utilizando o padrão OpenAPI 3 e o Swagger
+ * 
  * 1 - Configurar as dependências requeridas do plugin spring open api no pom.xml
- * 2 - Acessar a url da documentação: http://127.0.0.1:8081/crud/swagger-ui.html
- * json: http://127.0.0.1:8081/crud/v3/api-docs
+ * 2 - Acessar a url da documentação: http://127.0.0.1:8081/crud/swagger-ui.html | json: http://127.0.0.1:8081/crud/v3/api-docs
+ * 3 - Documentação para as anotações do swagger-core annotations 2.x.x https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations
+ * 4 - How to da biblioteca https://springdoc.org/faq.html#how-can-i-explicitly-set-which-paths-to-filter
  * 
  * sonarqube server
+ * 
  * 1 - docker pull sonarqube
  * 2 - docker run -p 9000:9000 sonarqube
  * 3 - http://localhost:9000 
@@ -29,6 +32,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 7 - Opcional configurar regras do sonar no eclipse: Window > Preferences > SonarLint > Rules Configuration
  
  * sonarlint plugin
+ * 
  * 1 - Adicionar o plugin do eclipse
  * 2 - clicar com o botão direito no projeto ir em SonarLint, depois clicar em analyze
  * @author Breno

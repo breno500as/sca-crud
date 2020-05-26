@@ -15,6 +15,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 3 - Documentação para as anotações do swagger-core annotations 2.x.x https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations
  * 4 - How to da biblioteca https://springdoc.org/faq.html#how-can-i-explicitly-set-which-paths-to-filter
  * 
+ * postman também gera / importa documentação no padrão OpenApi:
+ * 
+ * https://learning.postman.com/docs/postman/collections/working-with-openAPI/
+ * 
  * sonarqube server
  * 
  * 1 - docker pull sonarqube
@@ -35,6 +39,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 
  * 1 - Adicionar o plugin do eclipse
  * 2 - clicar com o botão direito no projeto ir em SonarLint, depois clicar em analyze
+ * 
+ * Guia de desenho de apis do google
+ * 
+ * https://www.infoq.com/br/news/2017/03/google-api-design-guide/
+ * 
  * @author Breno
  *
  */

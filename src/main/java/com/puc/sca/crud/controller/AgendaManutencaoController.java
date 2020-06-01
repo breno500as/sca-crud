@@ -38,7 +38,6 @@ public class AgendaManutencaoController {
 		
 		CodigoEspecificoInsumo c = codigoEspecificoInsumo.get();
 
-		// TODO - Validações de data, campos obrigatórios, filtrar pelo período informado etc.
 		final Optional<AgendaManutencaoInsumo> insumoJaAgendado = this.agendaManutencaorepository.findByCodigoEspecificoInsumo(new CodigoEspecificoInsumo(c.getId()));
 
 		if (insumoJaAgendado.isPresent()) {

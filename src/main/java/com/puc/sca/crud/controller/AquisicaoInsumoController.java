@@ -61,7 +61,7 @@ public class AquisicaoInsumoController {
 
 		switch (insumoFornecedorDTO.getFornecedor()) {
 
-		// TODO - recuperar do profile o endereço dos sistemas de aquisições, tratar exceções, criar tabela de acompanhamentos, etc.
+		
 		case FURLAN:
 			logger.info(Fornecedor.FURLAN);
 			break;

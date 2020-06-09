@@ -67,9 +67,14 @@ public class InsumoController {
 		if (insumo.getCodigosConcatenadosInsumo() != null && !insumo.getCodigosConcatenadosInsumo().isEmpty()) {
 			 this.saveCodigoEspecificoInsumo(insumo);
 		} 
+		
+		Insumo i = this.insumoRepository.save(insumo);
+		
+		insumo.getCodigosEspecificosInsumo().get(0).setCodigo("braminha");
+		this.codigoEspecificoInsumoRespository.save(insumo.getCodigosEspecificosInsumo().get(0));
  
 		
-		return this.insumoRepository.save(insumo);
+		return i;
 	}
 	
 	

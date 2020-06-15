@@ -1,3 +1,6 @@
+#docker build --build-arg GITHUB_REPOSITORY_SERVER_USERNAME=breno500as --build-arg GITHUB_REPOSITORY_SERVER_PASSWORD=token -t sca-crud .
+#docker-compose build --build-arg GITHUB_REPOSITORY_SERVER_USERNAME=breno500as --build-arg GITHUB_REPOSITORY_SERVER_PASSWORD=token
+
 #
 # Download stage
 #
@@ -14,14 +17,10 @@ RUN apk add --update unzip && \
     unzip /usr/share/maven/conf/master.zip -d /usr/share/maven/conf && \
     mv /usr/share/maven/conf/sca-maven-settings-master/settings.xml /usr/share/maven/conf && \
     mkdir /build
-COPY --from=git /app/sca-crud /build
-WORKDIR /build
 ARG GITHUB_REPOSITORY_SERVER_USERNAME
 ARG GITHUB_REPOSITORY_SERVER_PASSWORD
-RUN echo "$GITHUB_REPOSITORY_SERVER_USERNAME"
-RUN echo $GITHUB_REPOSITORY_SERVER_USERNAME
-RUN echo "$GITHUB_REPOSITORY_SERVER_PASSWORD"
-RUN echo $GITHUB_REPOSITORY_SERVER_PASSWORD
+COPY --from=git /app/sca-crud /build
+WORKDIR /build
 RUN mvn clean dependency:resolve dependency:resolve-plugins -Dgithub.repository.server.username=$GITHUB_REPOSITORY_SERVER_USERNAME -Dgithub.repository.server.password=$GITHUB_REPOSITORY_SERVER_PASSWORD -P dev package spring-boot:repackage -DskipTests 
  
 #

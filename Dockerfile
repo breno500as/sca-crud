@@ -11,7 +11,7 @@ RUN git clone https://github.com/breno500as/sca-crud.git
 FROM maven:3.5-jdk-8-alpine as builder
 ADD https://github.com/breno500as/sca-maven-settings/archive/master.zip /usr/share/maven/conf
 RUN ls /usr/share/maven/conf
-RUN ls /usr/share/maven
+RUN ls -d /usr/share/maven/conf/*/
 RUN mv /usr/share/maven/conf/sca-maven-settings-master/settings.xml /usr/share/maven/conf
 RUN mkdir /build
 COPY --from=git /app/sca-crud /build

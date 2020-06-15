@@ -10,14 +10,14 @@ RUN git clone https://github.com/breno500as/sca-crud.git
 #
 FROM maven:3.5-jdk-8-alpine as builder
 ADD https://github.com/breno500as/sca-maven-settings/archive/master.zip /usr/share/maven/conf
-RUN apk add --update unzip
-RUN unzip /usr/share/maven/conf/master.zip -d /usr/share/maven/conf
-RUN ls -d /usr/share/maven/conf/*/
-RUN mv /usr/share/maven/conf/sca-maven-settings-master/settings.xml /usr/share/maven/conf
-RUN mkdir /build
+RUN apk add --update unzip && \
+    unzip /usr/share/maven/conf/master.zip -d /usr/share/maven/conf && \
+    ls -d /usr/share/maven/conf/*/ && \
+    mv /usr/share/maven/conf/sca-maven-settings-master/settings.xml /usr/share/maven/conf && \
+    mkdir /build
 COPY --from=git /app/sca-crud /build
 WORKDIR /build
-RUN echo $github.repository.server.username
+ENV github.repository.server.username=$github.repository.server.username github.repository.server.password=$github.repository.server.password
 RUN mvn clean dependency:resolve dependency:resolve-plugins -Dgithub.repository.server.username=$github.repository.server.username -Dgithub.repository.server.password=$github.repository.server.password package spring-boot:repackage -DskipTests 
  
 #

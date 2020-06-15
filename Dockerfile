@@ -20,7 +20,7 @@ ARG github.repository.server.username
 ARG github.repository.server.password
 RUN echo $github.repository.server.username
 RUN echo $github.repository.server.password
-RUN mvn clean dependency:resolve dependency:resolve-plugins -Dgithub.repository.server.username=github.repository.server.username -Dgithub.repository.server.password=github.repository.server.password -P dev package spring-boot:repackage -DskipTests 
+RUN mvn clean dependency:resolve dependency:resolve-plugins -Dgithub.repository.server.username=$github.repository.server.username -Dgithub.repository.server.password=$github.repository.server.password -P dev package spring-boot:repackage -DskipTests 
  
 #
 # Package stage

@@ -25,10 +25,19 @@
 		<!-- a senha de acesso deste usuário -->
 		<sonar.password>admin</sonar.password>
 	</properties>
-	
+
 	<build>
-	  <finalName>sca-crud</finalName>
-    </build>
+	    <finalName>sca-crud</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<profiles>
 		<profile>

@@ -1,6 +1,3 @@
-#docker build --build-arg GITHUB_REPOSITORY_SERVER_USERNAME=breno500as --build-arg GITHUB_REPOSITORY_SERVER_PASSWORD=token -t sca-crud .
-#docker-compose build --build-arg GITHUB_REPOSITORY_SERVER_USERNAME=breno500as --build-arg GITHUB_REPOSITORY_SERVER_PASSWORD=token
-
 FROM openjdk:11-jdk-slim 
 VOLUME /tmp
 COPY target/sca-crud-exec.jar app.jar

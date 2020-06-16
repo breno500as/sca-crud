@@ -1,5 +1,15 @@
 version: "3"
 services:
+  crud-db:
+    image: postgres:latest
+    ports:
+      - 5432
+    environment:
+         - POSTGRES_PASSWORD=root
+         - POSTGRES_USER=postgres
+         - POSTGRES_DB=sca-crud
+    networks:
+      - sca-util-network
   crud-web:
     build:
       context: .
@@ -13,16 +23,6 @@ services:
     environment:
       - PORT=8081
       - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
-    networks:
-      - sca-util-network
-  crud-db:
-    image: postgres:latest
-    ports:
-      - 5432
-    environment:
-         - POSTGRES_PASSWORD=root
-         - POSTGRES_USER=postgres
-         - POSTGRES_DB=sca-crud
     networks:
       - sca-util-network
 networks:

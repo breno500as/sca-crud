@@ -8,7 +8,8 @@ script:
   - cp .travis.settings.xml $HOME/.m2/settings.xml
   - mvn clean -Dgithub.repository.server.username=$GITHUB_REPOSITORY_SERVER_USERNAME -Dgithub.repository.server.password=$GITHUB_REPOSITORY_SERVER_PASSWORD -P github -DskipTests package
   - docker-compose pull crud-db
-  - docker-compose build
+  - docker-compose build --pull
+  - docker-compose pull crud-db
 install: skip
 before_deploy:
   - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin

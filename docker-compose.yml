@@ -1,6 +1,5 @@
 version: "3"
 services:
-  
   crud-web:
     build:
       context: .
@@ -16,7 +15,6 @@ services:
       - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
     networks:
       - sca-util-network
-      
   crud-db:
     image: postgres:latest
     ports:
@@ -27,6 +25,6 @@ services:
          - POSTGRES_DB=sca-crud
     networks:
       - sca-util-network
-  networks:
+networks:
     sca-util-network:
         driver: bridge

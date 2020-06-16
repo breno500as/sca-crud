@@ -1,14 +1,27 @@
-sudo: false
 language: java
-services:
-- docker
+jdk:
+  - oraclejdk11
 cache:
   directories:
   - "$HOME/.cache"
-
+#utilizado para baixar dependencias, configurar ambiente
+#executa um script de instalação
+script:
+  - cp .travis.settings.xml $HOME/.m2/settings.xml && mvn clean -Dgithub.repository.server.username=$GITHUB_REPOSITORY_SERVER_USERNAME -Dgithub.repository.server.password=$GITHUB_REPOSITORY_SERVER_PASSWORD -P github package
+  - docker-compose build --build-arg GITHUB_REPOSITORY_SERVER_USERNAME=$GITHUB_REPOSITORY_SERVER_USERNAME --build-arg GITHUB_REPOSITORY_SERVER_PASSWORD=$GITHUB_REPOSITORY_SERVER_PASSWORD
+  - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE docker-compose up
+install: skip
+#antes do deploy é necessário fazer o login no docker hub, utilizando as variáveis de ambiente configuradas na página do travis, no repositório específico.
+before_deploy:
+  - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
 deploy:
   provider: script
-  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy"
-  skip_cleanup: true
+  script:
+    docker tag sca-crud $DOCKER_USERNAME/sca-crud:$TRAVIS_JOB_ID;
+    docker tag sca-crud $DOCKER_USERNAME/sca-crud;
+    docker push $DOCKER_USERNAME/sca-crud:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/sca-crud;
   on:
-    tags: true
+    brach: master
+notifications:
+  email: false

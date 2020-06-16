@@ -29,5 +29,5 @@ RUN mvn clean dependency:resolve dependency:resolve-plugins -Dgithub.repository.
 #
 FROM openjdk:8-jdk-alpine as runtime
 RUN mkdir /app
-COPY --from=builder /build/target/*.jar app.jar
+COPY --from=builder /build/target/sca-crud-exec.jar app.jar
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]

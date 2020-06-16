@@ -49,8 +49,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 
 @SpringBootApplication
-//@EnableDiscoveryClient
-//@EnableCircuitBreaker
+@EnableDiscoveryClient
+@EnableCircuitBreaker
 @EnableCaching
 public class ScaCrudApplication {
 

@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.puc.sca.crud</groupId>
 	<artifactId>sca-crud</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>sca-crud</name>
 	<description>Aplicação para crud de insumos de uma mineiradora</description>
 
@@ -25,8 +25,10 @@
 		<!-- a senha de acesso deste usuário -->
 		<sonar.password>admin</sonar.password>
 	</properties>
-
-
+	
+	<build>
+	  <finalName>sca-crud</finalName>
+    </build>
 
 	<profiles>
 		<profile>
@@ -113,7 +115,6 @@
 			<artifactId>sca-util</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-
 	</dependencies>
 
 

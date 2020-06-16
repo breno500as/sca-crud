@@ -4,13 +4,10 @@ jdk:
 cache:
   directories:
   - "$HOME/.cache"
-#utilizado para baixar dependencias, configurar ambiente
-#executa um script de instalação
 script:
   - cp .travis.settings.xml $HOME/.m2/settings.xml && mvn clean -Dgithub.repository.server.username=$GITHUB_REPOSITORY_SERVER_USERNAME -Dgithub.repository.server.password=$GITHUB_REPOSITORY_SERVER_PASSWORD -P github package spring-boot:repackage -DskipTests
   - docker-compose build --build-arg GITHUB_REPOSITORY_SERVER_USERNAME=$GITHUB_REPOSITORY_SERVER_USERNAME --build-arg GITHUB_REPOSITORY_SERVER_PASSWORD=$GITHUB_REPOSITORY_SERVER_PASSWORD
 install: skip
-#antes do deploy é necessário fazer o login no docker hub, utilizando as variáveis de ambiente configuradas na página do travis, no repositório específico.
 before_deploy:
   - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
 deploy:

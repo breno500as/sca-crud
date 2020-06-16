@@ -3,8 +3,7 @@
 
 FROM openjdk:11-jdk-slim 
 VOLUME /tmp
-RUN ls
 ADD target/sca-crud.jar app.jar
-EXPOSE 8080
+EXPOSE 8081
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]

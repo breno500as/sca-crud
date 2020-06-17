@@ -18,8 +18,6 @@ services:
     image: sca-crud
     ports:
       - '8081:8081'
-    server:
-      port: $PORT
     depends_on:
       - crud-db
     environment:
@@ -29,6 +27,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_USERNAME
       #O heroku obriga que a aplicação escute a porta passada por ele via variável de ambiente.
       - SERVER_PORT=$PORT
+      - PORT=$PORT
     networks:
       - sca-util-network
 networks:

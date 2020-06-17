@@ -30,7 +30,7 @@ services:
       #O heroku obriga a utilização da porta passada por ele via variável de ambiente 
       #para servir de saída para o protocolo HTTP.
       #A variável de ambiente deve ser recebida apenas aqui.
-      - SERVER_PORT=$PORT
+      
     networks:
       - sca-util-network
 networks:

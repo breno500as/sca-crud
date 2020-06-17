@@ -17,7 +17,9 @@ services:
     container_name: crud-web
     image: sca-crud
     ports:
-      - '5000:5000'
+      #As portas abaixo serão ignoradas pelo heroku, que origa utilizar a 
+      #porta que ele envia via variável de ambiente: $PORT
+      - '8081:8081'
     depends_on:
       - crud-db
     environment:

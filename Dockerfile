@@ -1,7 +1,4 @@
 FROM openjdk:11-jdk-slim
 VOLUME /tmp
 COPY target/sca-crud-exec.jar app.jar
- #O heroku obriga que a aplicação escute a porta passada por ele via variável de ambiente: -Dserver.port=$PORT
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
-#"-Dserver.port=$PORT"
-#SPRING_PROFILES_ACTIVE=prd SPRING_DATASOURCE_USERNAME=postgres SPRING_DATASOURCE_PASSWORD=root SPRING_DATASOURCE_URL=jdbc:postgresql://crud-db:5432/sca-crud docker-compose up

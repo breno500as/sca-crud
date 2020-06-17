@@ -16,6 +16,11 @@ public class TipoInsumo extends BaseEntity {
 	public TipoInsumo(Long id) {
 		setId(id);
 	}
+	
+	public TipoInsumo(Long id, String descricao) {
+		setId(id);
+		setDescricao(descricao);
+	}
 
 	@NotNull
 	private String descricao;

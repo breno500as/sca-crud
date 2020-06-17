@@ -1,4 +1,5 @@
 FROM openjdk:11-jdk-slim
+VOLUME /tmp
 COPY target/sca-crud-exec.jar app.jar
  #O heroku obriga que a aplicação escute a porta passada por ele via variável de ambiente: -Dserver.port=$PORT
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]

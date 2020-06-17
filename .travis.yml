@@ -12,7 +12,6 @@ install: skip
 before_deploy:
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
   - echo $HEROKU_PASSWORD | docker login --username $HEROKU_USERNAME --password-stdin registry.heroku.com
 deploy:
   provider: script

@@ -10,7 +10,7 @@ script:
   - docker-compose build
 install: skip
 before_deploy:
-  # install heroku CLI
+  # install heroku CLIs
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo $HEROKU_PASSWORD | docker login --username $HEROKU_USERNAME --password-stdin registry.heroku.com
 deploy:

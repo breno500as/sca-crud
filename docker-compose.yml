@@ -25,9 +25,10 @@ services:
       - SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL
       - SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD
       - SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_USERNAME
-      - PORT=$PORT
+      #O heroku obriga que a aplicação escute a porta passada por ele via variável de ambiente.
+      - SERVER_PORT=$PORT
     networks:
       - sca-util-network
 networks:
     sca-util-network:
-        driver: bridge
+        driver: bridge 

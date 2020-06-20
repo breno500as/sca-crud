@@ -25,12 +25,14 @@ services:
     depends_on:
       - crud-db
     environment:
-      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
-      - SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL
-      - SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD
-      - SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_USERNAME
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-hml}
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:postgresql://crud-db:5432/sca-crud}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD:-root}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-postgres}
     networks:
       - sca-crud-network
+    volumes:
+      - /opt/data:/logs
 networks:
     sca-crud-network:
         driver: bridge 

@@ -9,7 +9,7 @@ services:
          - POSTGRES_USER=postgres
          - POSTGRES_DB=sca-crud
     networks:
-      - sca-util-network
+      - sca-crud-network
   crud-web:
     build:
       context: .
@@ -30,7 +30,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD
       - SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_USERNAME
     networks:
-      - sca-util-network
+      - sca-crud-network
 networks:
-    sca-util-network:
+    sca-crud-network:
         driver: bridge 

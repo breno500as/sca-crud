@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,6 +57,9 @@ public class InsumoController {
 	@Autowired
 	private CodigoEspecificoInsumoRepository codigoEspecificoInsumoRespository;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@PostMapping
 	@Operation(summary = "Salva o insumo", description = "Recebe um insumo para persistência", tags = { "insumos" })
 	@ApiResponses(value = {
@@ -68,13 +72,7 @@ public class InsumoController {
 			 this.saveCodigoEspecificoInsumo(insumo);
 		} 
 		
-		Insumo i = this.insumoRepository.save(insumo);
-		
-		insumo.getCodigosEspecificosInsumo().get(0).setCodigo("braminha");
-		this.codigoEspecificoInsumoRespository.save(insumo.getCodigosEspecificosInsumo().get(0));
- 
-		
-		return i;
+		return this.insumoRepository.save(insumo);
 	}
 	
 	

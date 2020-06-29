@@ -16,10 +16,7 @@ script:
   - docker-compose build
 install: skip
 before_deploy:
-  # install heroku CLI
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
-  - echo $HEROKU_PASSWORD | docker login --username $HEROKU_USERNAME --password-stdin registry.heroku.com
 deploy:
   provider: script
   script:
@@ -38,7 +35,7 @@ after-success:
   - pip3 install awscli --upgrade --user
   - export PATH=$PATH:$HOME/.local/bin
   - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 596058222797.dkr.ecr.us-east-2.amazonaws.com
-  - docker tag ${APP_NAME}:latest $IMAGE_REPO_URL:latest
+  - docker tag ${APP_NAME}:latest $IMAGE_REPO_URL:$TRAVIS_JOB_ID
   - docker push $IMAGE_REPO_URL:$TRAVIS_JOB_ID
   
   #Deploy da imagem utilizando o ECS-Deploy

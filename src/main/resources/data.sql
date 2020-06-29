@@ -1,5 +1,5 @@
 insert into tipo_insumo (id, descricao) values (1, 'Braminha');
-insert into tipo_insumo (id, descricao) values (2, 'Máquina');
+/*insert into tipo_insumo (id, descricao) values (2, 'Máquina');
 insert into tipo_insumo (id, descricao) values (3, 'Instrumento topografia');
 insert into tipo_insumo (id, descricao) values (4, 'Equipamento segurança');
 insert into tipo_insumo (id, descricao) values (5, 'Tecnologia da informação');

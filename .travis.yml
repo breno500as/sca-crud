@@ -32,9 +32,10 @@ after-success:
   - pip3 -V
   - pip3 uninstall wheel
   - pip3 install wheel
-  - pip3 install awscli --upgrade --user
+  - pip3 install awscli
+  - pip install -U pip
+  - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - snap install aws-cli
   - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 596058222797.dkr.ecr.us-east-2.amazonaws.com
   - docker tag ${APP_NAME}:latest $IMAGE_REPO_URL:$TRAVIS_JOB_ID
   - docker push $IMAGE_REPO_URL:$TRAVIS_JOB_ID

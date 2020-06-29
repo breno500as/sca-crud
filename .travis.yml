@@ -26,15 +26,11 @@ deploy:
     brach: master
 after-success:
   - sudo apt-get -y install python3-pip python-dev
-  - sudo pip3 install -U setup-tools
+  - sudo pip3 install -U setuptools
   - sudo pip3 install -U virtualenvwrapper
-  - python3 -V
-  - pip3 -V
   - pip3 uninstall wheel
   - pip3 install wheel
-  - pip3 install awscli
-  - pip install -U pip
-  - pip install awscli
+  - pip3 install awscli --upgrade --user
   - export PATH=$PATH:$HOME/.local/bin
   - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 596058222797.dkr.ecr.us-east-2.amazonaws.com
   - docker tag ${APP_NAME}:latest $IMAGE_REPO_URL:$TRAVIS_JOB_ID

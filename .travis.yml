@@ -1,10 +1,16 @@
+#Travis yml da amazon
+sudo: required
+dist: bionic
 language: java
 jdk:
   - oraclejdk11
+python:
+  - "3.6"
 cache:
   directories:
   - "$HOME/.cache"
 script:
+  - sudo apt-get update
   - cp .travis.settings.xml $HOME/.m2/settings.xml
   - mvn clean -Dgithub.repository.server.username=$GITHUB_REPOSITORY_SERVER_USERNAME -Dgithub.repository.server.password=$GITHUB_REPOSITORY_SERVER_PASSWORD -P github -DskipTests package
   - docker-compose build
@@ -17,12 +23,35 @@ before_deploy:
 deploy:
   provider: script
   script:
-    docker tag $HEROKU_APP_NAME $DOCKER_USERNAME/$HEROKU_APP_NAME:$TRAVIS_JOB_ID;
-    docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web;
-    docker push $DOCKER_USERNAME/$HEROKU_APP_NAME:$TRAVIS_JOB_ID;
-    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
-    heroku container:release web --app $HEROKU_APP_NAME
+    docker tag $APP_NAME $DOCKER_USERNAME/$APP_NAME:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/$APP_NAME:$TRAVIS_JOB_ID;
   on:
     brach: master
+after-success:
+  - sudo apt-get -y install python3-pip python-dev
+  - sudo pip3 install -U setup-tools
+  - sudo pip3 install -U virtualenvwrapper
+  - python3 -V
+  - pip3 -V
+  - pip3 uninstall wheel
+  - pip3 install wheel
+  - pip3 install awscli --upgrade --user
+  - export PATH=$PATH:$HOME/.local/bin
+  - eval aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 596058222797.dkr.ecr.us-east-2.amazonaws.com
+  - docker tag sca-crud:latest $IMAGE_REPO_URL:latest
+  - docker push $IMAGE_REPO_URL:$TRAVIS_JOB_ID
+  
+  #Deploy da imagem utilizando o ECS-Deploy
+  - add-apt-repository ppa:eugenesan/ppa
+  - apt-get update
+  - apt-get install jq -y
+  - curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy
+  - sudo chmod +x /usr/bin/ecs-deploy
+  - echo "AWS ECS-Deploy configurado"
+  - ecs-deploy -c $CLUSTER_NAME -n $SERVICE_NAME -i $IMAGE_REPO_URL:$TRAVIS_JOB_ID -r $AWS_DEFAULT_REGION -t 240
+  
+  #Deploy da imagem utilizando o awscli, o ECS-Deploy apesar de dar mais trabalho na instalação ele facilita os comandos para deploy
+  #e construção de containers.
+  # - aws ecs update-service --service $SERVICE_NAME --task-definition $TASK_DEFINITION_NAME
 notifications:
   email: false

@@ -1,11 +1,11 @@
 #Travis yml da amazon
 sudo: required
-dist: bionic
+dist: bionic #garante a utilização da distribuição bionic do ubuntu
 language: java
 jdk:
   - oraclejdk11
 python:
-  - "3.6"
+  - "3.6" #garante a versão específica 3.6 do python
 cache:
   directories:
   - "$HOME/.cache"
@@ -25,7 +25,7 @@ deploy:
   on:
     brach: master
 after-success:
-  #Instalação do awscli
+  #Integração com o ECR - Instalação do awscli para o push da imagem, necessário instalar o python antes.
   - sudo apt-get -y install python3-pip python-dev
   - sudo pip3 install -U setuptools
   - sudo pip3 install -U virtualenvwrapper
@@ -33,17 +33,20 @@ after-success:
   - pip3 install wheel
   - pip3 install awscli --upgrade --user
   - export PATH=$PATH:$HOME/.local/bin
+      #Comandos abaixo obtidos do ECR ao clicar no botão View Push Commands
   - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 596058222797.dkr.ecr.us-east-2.amazonaws.com
-  - docker tag ${APP_NAME}:latest $IMAGE_REPO_URL:$TRAVIS_JOB_ID
+  - docker tag $APP_NAME:latest $IMAGE_REPO_URL:$TRAVIS_JOB_ID
   - docker push $IMAGE_REPO_URL:$TRAVIS_JOB_ID
   
-  #Deploy da imagem utilizando o ECS-Deploy
+  #Integração do ECS - Deployando a imagem com o ECS-Deploy
   - add-apt-repository ppa:eugenesan/ppa
   - apt-get update
   - apt-get install jq -y
-  - curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy
+       #url copiada do github, o pipe executa os dois comandos na mesma instrução         # tee pega o resultado da primeira execução e grava no diretório informado (/usr/bin/ecs-deploy)
+  - curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy 
+       #da permissão de execução na pasta
   - sudo chmod +x /usr/bin/ecs-deploy
-  - echo "AWS ECS-Deploy configurado"
+       #efetivamente faz o deploy da imagem no cluster, disparando a task. -t significa que se não executar em x (240) segundos vai interromper a execução com timeout
   - ecs-deploy -c $CLUSTER_NAME -n $SERVICE_NAME -i $IMAGE_REPO_URL:$TRAVIS_JOB_ID -r $AWS_DEFAULT_REGION -t 240
   
   #Deploy da imagem utilizando o awscli, o ECS-Deploy apesar de dar mais trabalho na instalação ele facilita os comandos para deploy

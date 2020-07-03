@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class AgendaManutencaoController {
 
 	@PostMapping
 	@ResponseBody
-	public void agendaManutencao(@RequestBody AgendaManutencaoInsumo agendaManutencaoInsumo) {
+	public ResponseEntity<?> agendaManutencao(@RequestBody AgendaManutencaoInsumo agendaManutencaoInsumo) {
 		
 		final Optional<CodigoEspecificoInsumo> codigoEspecificoInsumo = this.codigoEspecificoInsumoRespository.findByCodigo(agendaManutencaoInsumo.getCodigoEspecificoInsumo().getCodigo());
 		
@@ -46,6 +47,8 @@ public class AgendaManutencaoController {
 
 		agendaManutencaoInsumo.setCodigoEspecificoInsumo(c);
 		this.agendaManutencaorepository.save(agendaManutencaoInsumo);
+		
+		return ResponseEntity.noContent().build();
 
 	}
 

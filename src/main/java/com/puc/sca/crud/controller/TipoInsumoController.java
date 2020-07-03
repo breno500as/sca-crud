@@ -2,6 +2,7 @@ package com.puc.sca.crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +23,9 @@ public class TipoInsumoController {
 
 	@GetMapping
 	@Cacheable("tipos-insumo")
-	public Iterable<TipoInsumo> findAll() {
+	public ResponseEntity<Iterable<TipoInsumo>> findAll() {
 		TipoInsumoController.LOG.info("tipos insumo controller: {}", this.repository);
-		return this.repository.findAll();
+		return ResponseEntity.ok(this.repository.findAll());
 	}
 
 }

@@ -31,6 +31,8 @@ import com.puc.sca.crud.entity.BaseEntity;
 public class Insumo extends BaseEntity {
 
 	private static final long serialVersionUID = 7977428935549712028L;
+	
+	public static final String INSUMO_NAO_ENCONTRADO = "Insumo não encontrado!";
 
 	@NotNull
 	private Date dataCadastro = new Date();

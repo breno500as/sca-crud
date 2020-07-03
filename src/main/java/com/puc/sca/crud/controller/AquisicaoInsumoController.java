@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +57,7 @@ public class AquisicaoInsumoController {
 	 */
 
 	@PostMapping
-	public void solitaAquisicaoInsumo(@RequestBody InsumoFornecedorDTO insumoFornecedorDTO) {
+	public ResponseEntity<?> solitaAquisicaoInsumo(@RequestBody InsumoFornecedorDTO insumoFornecedorDTO) {
 
 		switch (insumoFornecedorDTO.getFornecedor()) {
 
@@ -76,6 +77,8 @@ public class AquisicaoInsumoController {
 		default:
 			break;
 		}
+		
+		return ResponseEntity.noContent().build();
 	}
 
 	/**
@@ -90,8 +93,8 @@ public class AquisicaoInsumoController {
 	
  
 	@GetMapping("comparativo-precos/{idTipoDescricaoInsumo}")
-	public List<String> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
-		return Collections.emptyList();
+	public ResponseEntity<List<String>> comparativoDePrecos(@PathVariable("idTipoDescricaoInsumo") Long tipoDescricaoInsumoId) {
+		return ResponseEntity.ok(Collections.emptyList());
 	}
 
 	/**
@@ -120,8 +123,8 @@ public class AquisicaoInsumoController {
 
 	//@HystrixCommand(fallbackMethod = "reliableInformacoes")
 	@GetMapping("informacoes-solicitacao/{numeroSolicitacao}")
-	public List<String> informacoesSolicitacaoAquisicao(@PathVariable("numeroSolicitacao") String numeroSolicitacao) {
-		return Collections.emptyList();
+	public ResponseEntity<List<String>> informacoesSolicitacaoAquisicao(@PathVariable("numeroSolicitacao") String numeroSolicitacao) {
+		return ResponseEntity.ok(Collections.emptyList());
 	}
 
 }

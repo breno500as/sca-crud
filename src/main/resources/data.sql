@@ -1,9 +1,9 @@
-insert into tipo_insumo (id, descricao) values (1, 'Braminha');
-/*insert into tipo_insumo (id, descricao) values (2, 'Máquina');
+insert into tipo_insumo (id, descricao) values (1, 'Veículo');
+insert into tipo_insumo (id, descricao) values (2, 'Máquina');
 insert into tipo_insumo (id, descricao) values (3, 'Instrumento topografia');
 insert into tipo_insumo (id, descricao) values (4, 'Equipamento segurança');
 insert into tipo_insumo (id, descricao) values (5, 'Tecnologia da informação');
-/*
+
 insert into sub_tipo_insumo (id,descricao, tipo_insumo_id) values (1, 'Escavadeira', 1);
 insert into sub_tipo_insumo (id,descricao, tipo_insumo_id) values (2, 'Retroescavadeira', 1);
 insert into sub_tipo_insumo (id,descricao, tipo_insumo_id) values (3, 'Caminhão',1);
@@ -44,4 +44,4 @@ insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (15
 insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (16,'Dell','Inspiron',19);
 insert into tipo_marca_modelo (id, marca, modelo, sub_tipo_insumo_id) values (17,'Autocad','1.0',20);
 
-insert into insumo (id, tipo_insumo_id, sub_tipo_insumo_id, tipo_marca_modelo_id, data_cadastro, quantidade, link_informacoes_tecnicas_fornecedor) values (70,1,1,1, now(), 1,'http://www.google.com');*/
+insert into insumo (id, tipo_insumo_id, sub_tipo_insumo_id, tipo_marca_modelo_id, data_cadastro, quantidade, link_informacoes_tecnicas_fornecedor) values (70,1,1,1, now(), 1,'http://www.google.com');

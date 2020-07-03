@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,8 @@ public class SubTipoInsumoController {
 	
 	@GetMapping
 	@Cacheable("subtipos-insumo")
-	public List<SubTipoInsumo> findAllBySubTipoInsumo(@RequestParam("tipoInsumo") Long tipoInsumo) {
-		return this.repository.findByTipoInsumo(new TipoInsumo(tipoInsumo));
+	public ResponseEntity<List<SubTipoInsumo>> findAllBySubTipoInsumo(@RequestParam("tipoInsumo") Long tipoInsumo) {
+		return ResponseEntity.ok(this.repository.findByTipoInsumo(new TipoInsumo(tipoInsumo)));
 	}
 
 }

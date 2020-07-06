@@ -127,7 +127,7 @@ public class InsumoController {
 	
 	
 	@GetMapping("{id}")
-	@Operation(summary = "Encontra o insumo pelo ID", description = "Returna um único insumo", tags = { "insumos" })
+	@Operation(summary = "Encontra o insumo pelo id", description = "Returna um único insumo", tags = { "insumos" })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "sucesso", content = @Content(schema = @Schema(implementation = Insumo.class))),
 			@ApiResponse(responseCode = "404", description = Insumo.INSUMO_NAO_ENCONTRADO) })

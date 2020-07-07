@@ -1,19 +1,18 @@
 package com.puc.sca.crud.dto;
 
-import com.puc.sca.crud.entity.insumo.Insumo;
 import com.puc.sca.crud.enums.Fornecedor;
 
 public class InsumoFornecedorDTO {
 
-	private Insumo insumo;
+	private InsumoDTO insumo;
 
 	private Fornecedor fornecedor;
 
-	public Insumo getInsumo() {
+	public InsumoDTO getInsumo() {
 		return insumo;
 	}
 
-	public void setInsumo(Insumo insumo) {
+	public void setInsumo(InsumoDTO insumo) {
 		this.insumo = insumo;
 	}
 

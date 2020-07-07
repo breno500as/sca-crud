@@ -1,6 +1,6 @@
 package com.puc.sca.crud.entity.insumo;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,7 +35,7 @@ public class Insumo extends BaseEntity {
 	public static final String INSUMO_NAO_ENCONTRADO = "Insumo não encontrado!";
 
 	@NotNull
-	private Date dataCadastro = new Date();
+	private LocalDateTime dataCadastro = LocalDateTime.now();
 
 	/**
 	 * {@link TipoInsumo}.
@@ -113,11 +113,11 @@ public class Insumo extends BaseEntity {
 		this.codigosEspecificosInsumo = codigosEspecificosInsumo;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
-
-	public void setDataCadastro(Date dataCadastro) {
+	
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 

@@ -29,6 +29,13 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 
 	@NotNull
 	private String codigo;
+	
+	/**
+	 * {@link AgendaManutencaoInsumo}.
+	 */
+
+	@OneToOne(mappedBy = "codigoEspecificoInsumo")
+	private AgendaManutencaoInsumo agendaManutencao;
 
 	public CodigoEspecificoInsumo() {
 	}
@@ -46,13 +53,6 @@ public class CodigoEspecificoInsumo extends BaseEntity {
 	public CodigoEspecificoInsumo(String codigo) {
 		this.codigo = codigo;
 	}
-
-	/**
-	 * {@link AgendaManutencaoInsumo}.
-	 */
-
-	@OneToOne(mappedBy = "codigoEspecificoInsumo")
-	private AgendaManutencaoInsumo agendaManutencao;
 
 	public Insumo getInsumo() {
 		return insumo;

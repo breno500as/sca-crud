@@ -1,6 +1,6 @@
 package com.puc.sca.crud.entity.insumo;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,21 +28,21 @@ public class AgendaManutencaoInsumo extends BaseEntity {
 	private CodigoEspecificoInsumo codigoEspecificoInsumo;
 
 	@NotNull
-	private Date dataInicio;
+	private LocalDateTime dataInicio;
 
 	@NotNull
-	private Date dataTermino;
+	private LocalDateTime dataTermino;
 
 	@Enumerated(EnumType.STRING)
 	private TipoManutencaoInsumo tipoManutencaoInsumo;
 
 	private Boolean manutencaoConcluida;
 
-	public Date getDataInicio() {
+	public LocalDateTime getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(LocalDateTime dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
@@ -54,11 +54,11 @@ public class AgendaManutencaoInsumo extends BaseEntity {
 		this.tipoManutencaoInsumo = tipoManutencaoInsumo;
 	}
 
-	public Date getDataTermino() {
+	public LocalDateTime getDataTermino() {
 		return dataTermino;
 	}
 
-	public void setDataTermino(Date dataTermino) {
+	public void setDataTermino(LocalDateTime dataTermino) {
 		this.dataTermino = dataTermino;
 	}
 

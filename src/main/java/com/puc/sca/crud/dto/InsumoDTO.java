@@ -2,6 +2,12 @@ package com.puc.sca.crud.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
+import com.puc.sca.crud.entity.insumo.TipoInsumo;
+import com.puc.sca.crud.entity.insumo.TipoMarcaModelo;
+
 public class InsumoDTO extends BaseDTO {
 
 	private static final long serialVersionUID = -3375989611473738207L;
@@ -23,6 +29,27 @@ public class InsumoDTO extends BaseDTO {
 	private Long totalElementos;
 
 	private String codigosConcatenadosInsumo;
+	
+	/**
+	 * Construtor para instanciar os relacionamentos no momento da deserialização.
+	 * 
+	 * @param tipoInsumo      - {@link TipoInsumo}
+	 * @param subTipoInsumo   - {@link SubTipoInsumo}
+	 * @param tipoMarcaModelo - {@link TipoMarcaModelo}
+	 */
+
+	@JsonCreator
+	public InsumoDTO(@JsonProperty("tipoInsumo") TipoInsumoDTO tipoInsumo,
+			@JsonProperty("subTipoInsumo") SubTipoInsumoDTO subTipoInsumo,
+			@JsonProperty("tipoMarcaModelo") TipoMarcaModeloDTO tipoMarcaModelo) {
+		this.tipoInsumo = tipoInsumo;
+		this.subTipoInsumo = subTipoInsumo;
+		this.tipoMarcaModelo = tipoMarcaModelo;
+	}
+	
+	public InsumoDTO() {
+		
+	}
 
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;

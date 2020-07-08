@@ -10,6 +10,8 @@ import com.puc.sca.crud.entity.BaseEntity;
 public class TipoMarcaModelo extends BaseEntity {
 
 	private static final long serialVersionUID = 7624651984961508447L;
+	
+	public static final String NAO_ENCONTRADO = "Tipo marca modelo não encontrada!";
 
 	@NotNull
 	private String marca;

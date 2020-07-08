@@ -10,12 +10,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.puc.sca.crud.entity.BaseEntity;
 
 /**
@@ -31,44 +27,23 @@ import com.puc.sca.crud.entity.BaseEntity;
 public class Insumo extends BaseEntity {
 
 	private static final long serialVersionUID = 7977428935549712028L;
-	
-	public static final String INSUMO_NAO_ENCONTRADO = "Insumo não encontrado!";
+
+	public static final String NAO_ENCONTRADO = "Insumo não encontrado!";
 
 	@NotNull
 	private LocalDateTime dataCadastro = LocalDateTime.now();
-
-	/**
-	 * {@link TipoInsumo}.
-	 */
 
 	@NotNull
 	@ManyToOne
 	private TipoInsumo tipoInsumo;
 
-	/**
-	 * {@link SubTipoInsumo}.
-	 */
-
 	@NotNull
 	@ManyToOne
 	private SubTipoInsumo subTipoInsumo;
 
-	public SubTipoInsumo getSubTipoInsumo() {
-		return subTipoInsumo;
-	}
-
-	public void setSubTipoInsumo(SubTipoInsumo subTipoInsumo) {
-		this.subTipoInsumo = subTipoInsumo;
-	}
-
-	/**
-	 * {@link TipoMarcaModelo}.
-	 */
-
 	@ManyToOne
 	private TipoMarcaModelo tipoMarcaModelo;
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CodigoEspecificoInsumo> codigosEspecificosInsumo;
 
@@ -77,33 +52,6 @@ public class Insumo extends BaseEntity {
 	private String linkInformacoesTecnicasFornecedor;
 
 	private Integer quantidade;
-
-	@Transient
-	private Long totalElementos;
-	
-	@Transient
-	private String codigosConcatenadosInsumo;
-
-	/**
-	 * Construtor para instanciar os relacionamentos no momento da deserialização.
-	 * 
-	 * @param tipoInsumo      - {@link TipoInsumo}
-	 * @param subTipoInsumo   - {@link SubTipoInsumo}
-	 * @param tipoMarcaModelo - {@link TipoMarcaModelo}
-	 */
-
-	@JsonCreator
-	public Insumo(@JsonProperty("tipoInsumo") TipoInsumo tipoInsumo,
-			@JsonProperty("subTipoInsumo") SubTipoInsumo subTipoInsumo,
-			@JsonProperty("tipoMarcaModelo") TipoMarcaModelo tipoMarcaModelo) {
-		this.tipoInsumo = tipoInsumo;
-		this.subTipoInsumo = subTipoInsumo;
-		this.tipoMarcaModelo = tipoMarcaModelo;
-	}
-
-	public Insumo() {
-
-	}
 
 	public List<CodigoEspecificoInsumo> getCodigosEspecificosInsumo() {
 		return codigosEspecificosInsumo;
@@ -116,7 +64,7 @@ public class Insumo extends BaseEntity {
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
-	
+
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
@@ -161,20 +109,67 @@ public class Insumo extends BaseEntity {
 		this.tipoMarcaModelo = tipoMarcaModelo;
 	}
 
-	public Long getTotalElementos() {
-		return totalElementos;
+	public SubTipoInsumo getSubTipoInsumo() {
+		return subTipoInsumo;
 	}
 
-	public void setTotalElementos(Long totalElementos) {
-		this.totalElementos = totalElementos;
+	public void setSubTipoInsumo(SubTipoInsumo subTipoInsumo) {
+		this.subTipoInsumo = subTipoInsumo;
 	}
-	
-	public String getCodigosConcatenadosInsumo() {
-		return codigosConcatenadosInsumo;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result + ((observacoes == null) ? 0 : observacoes.hashCode());
+		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
+		result = prime * result + ((subTipoInsumo == null) ? 0 : subTipoInsumo.hashCode());
+		result = prime * result + ((tipoInsumo == null) ? 0 : tipoInsumo.hashCode());
+		result = prime * result + ((tipoMarcaModelo == null) ? 0 : tipoMarcaModelo.hashCode());
+		return result;
 	}
-	
-	public void setCodigosConcatenadosInsumo(String codigosConcatenadosInsumo) {
-		this.codigosConcatenadosInsumo = codigosConcatenadosInsumo;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Insumo other = (Insumo) obj;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (observacoes == null) {
+			if (other.observacoes != null)
+				return false;
+		} else if (!observacoes.equals(other.observacoes))
+			return false;
+		if (quantidade == null) {
+			if (other.quantidade != null)
+				return false;
+		} else if (!quantidade.equals(other.quantidade))
+			return false;
+		if (subTipoInsumo == null) {
+			if (other.subTipoInsumo != null)
+				return false;
+		} else if (!subTipoInsumo.equals(other.subTipoInsumo))
+			return false;
+		if (tipoInsumo == null) {
+			if (other.tipoInsumo != null)
+				return false;
+		} else if (!tipoInsumo.equals(other.tipoInsumo))
+			return false;
+		if (tipoMarcaModelo == null) {
+			if (other.tipoMarcaModelo != null)
+				return false;
+		} else if (!tipoMarcaModelo.equals(other.tipoMarcaModelo))
+			return false;
+		return true;
 	}
 
 }

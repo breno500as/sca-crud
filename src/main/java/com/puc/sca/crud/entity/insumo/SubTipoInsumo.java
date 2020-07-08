@@ -10,6 +10,8 @@ import com.puc.sca.crud.entity.BaseEntity;
 public class SubTipoInsumo extends BaseEntity {
 
 	private static final long serialVersionUID = 7368127298635893508L;
+	
+	public static final String NAO_ENCONTRADO = "SubTipo insumo não encontrado!";
 
 	@NotNull
 	private String descricao;

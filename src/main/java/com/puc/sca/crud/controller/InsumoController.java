@@ -101,6 +101,7 @@ public class InsumoController {
 		 
 		final Insumo insumoDB = this.insumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Insumo.NAO_ENCONTRADO));
 		
+		// Verificar, pois com o model mapper não está updatando
 		//this.modelMapper.map(insumoDTO, insumoDB);
 		BeanUtils.copyProperties(insumoDTO, insumoDB);
 		

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +73,7 @@ public class InsumoController {
 			@ApiResponse(responseCode = "201", description = "Insumo criado", content = @Content(schema = @Schema(implementation = Insumo.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid input"),
 			@ApiResponse(responseCode = "409", description = "Insumo já existe") })
-	public ResponseEntity<InsumoDTO> save(@RequestBody InsumoDTO insumoDTO) {
+	public ResponseEntity<InsumoDTO> save(@RequestBody @Valid InsumoDTO insumoDTO) {
 		
 		final Insumo insumo = this.modelMapper.map(insumoDTO, Insumo.class);
 		
@@ -80,14 +83,14 @@ public class InsumoController {
 		
 		final Insumo insumoDb = this.insumoRepository.save(insumo);
 		
-		return ResponseEntity.ok(this.modelMapper.map(insumoDb, InsumoDTO.class));
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.modelMapper.map(insumoDb, InsumoDTO.class));
 	}
 	
 	
 	@PostMapping("/upload")
 	public ResponseEntity<Object> handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 
 	}
 	
@@ -97,7 +100,7 @@ public class InsumoController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Insumo atualizado"),
 			@ApiResponse(responseCode = "400", description = "Id inválido"),
 			@ApiResponse(responseCode = "404", description = Insumo.NAO_ENCONTRADO) })
-	public ResponseEntity<InsumoDTO> update(@PathVariable(value = "id") Long id, @RequestBody InsumoDTO insumoDTO) {
+	public ResponseEntity<InsumoDTO> update(@PathVariable(value = "id") Long id, @RequestBody @Valid InsumoDTO insumoDTO) {
 		 
 		final Insumo insumoDB = this.insumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Insumo.NAO_ENCONTRADO));
 		

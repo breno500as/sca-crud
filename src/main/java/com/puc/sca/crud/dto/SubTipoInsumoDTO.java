@@ -1,8 +1,6 @@
 package com.puc.sca.crud.dto;
 
-import com.puc.sca.crud.entity.BaseEntity;
-
-public class SubTipoInsumoDTO extends BaseEntity {
+public class SubTipoInsumoDTO extends BaseDTO {
 
 	private static final long serialVersionUID = 1782474594890983956L;
 

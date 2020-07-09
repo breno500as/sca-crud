@@ -2,6 +2,8 @@ package com.puc.sca.crud.dto;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.puc.sca.crud.entity.insumo.SubTipoInsumo;
@@ -14,10 +16,13 @@ public class InsumoDTO extends BaseDTO {
 
 	private LocalDateTime dataCadastro = LocalDateTime.now();
 
+	@NotNull(message = "Tipo insumo é obrigatório")
 	private TipoInsumoDTO tipoInsumo;
 
+	@NotNull(message = "Sub tipo é obrigatório")
 	private SubTipoInsumoDTO subTipoInsumo;
 
+	@NotNull(message = "Tipo marca modelo é obrigatório")
 	private TipoMarcaModeloDTO tipoMarcaModelo;
 
 	private String observacoes;

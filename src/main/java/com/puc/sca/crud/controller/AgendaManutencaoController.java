@@ -48,7 +48,7 @@ public class AgendaManutencaoController {
 		agendaManutencaoInsumo.setCodigoEspecificoInsumo(c);
 		this.agendaManutencaorepository.save(agendaManutencaoInsumo);
 		
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 
 	}
 

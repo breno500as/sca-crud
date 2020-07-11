@@ -71,8 +71,7 @@ public class InsumoController {
 	@Operation(summary = "Salva o insumo", description = "Recebe um insumo para persistência", tags = { "insumos" })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Insumo criado", content = @Content(schema = @Schema(implementation = Insumo.class))),
-			@ApiResponse(responseCode = "400", description = "Invalid input"),
-			@ApiResponse(responseCode = "409", description = "Insumo já existe") })
+			@ApiResponse(responseCode = "400", description = "Invalid input") })
 	public ResponseEntity<InsumoDTO> save(@RequestBody @Valid InsumoDTO insumoDTO) {
 		
 		final Insumo insumo = this.modelMapper.map(insumoDTO, Insumo.class);

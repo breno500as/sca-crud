@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.puc.sca.util.exception.ExceptionResponse;
@@ -53,6 +54,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 						LocalDateTime.now(),
 						request.getDescription(false),
 						errors);
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	/**
+	 * Handle chamado quando o arquivo ultrapassa o tamanho permitido.
+	 */
+	
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	protected ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		String [] parts  = ex.getMessage().split(":");
+		final ExceptionResponse exceptionResponse = 
+				new ExceptionResponse(
+						LocalDateTime.now(),
+						request.getDescription(false),
+						parts[parts.length -1].trim());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	

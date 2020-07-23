@@ -4,19 +4,9 @@ public class CodigoEspecificoInsumoDTO extends BaseDTO {
 
 	private static final long serialVersionUID = -2738522769477382778L;
 
-	private InsumoDTO insumo;
-
 	private String codigo;
 
 	private AgendaManutencaoInsumoDTO agendaManutencao;
-
-	public InsumoDTO getInsumo() {
-		return insumo;
-	}
-
-	public void setInsumo(InsumoDTO insumo) {
-		this.insumo = insumo;
-	}
 
 	public String getCodigo() {
 		return codigo;

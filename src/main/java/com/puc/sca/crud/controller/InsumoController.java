@@ -7,8 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +18,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,25 +64,22 @@ public class InsumoController {
 	@Autowired
 	private CodigoEspecificoInsumoRepository codigoEspecificoInsumoRespository;
 	
-	@Autowired
-	private ModelMapper modelMapper;
 	
 	@PostMapping
 	@Operation(summary = "Salva o insumo", description = "Recebe um insumo para persistência", tags = { "insumos" })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Insumo criado", content = @Content(schema = @Schema(implementation = Insumo.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid input") })
-	public ResponseEntity<InsumoDTO> save(@RequestBody @Valid InsumoDTO insumoDTO) {
+	public ResponseEntity<Insumo> save(@RequestBody @Valid Insumo insumo) {
 		
-		final Insumo insumo = this.modelMapper.map(insumoDTO, Insumo.class);
-		
-		if (insumoDTO.getCodigosConcatenadosInsumo() != null && !insumoDTO.getCodigosConcatenadosInsumo().isEmpty()) {
-			 this.saveCodigoEspecificoInsumo(insumo, insumoDTO);
+
+		if (!StringUtils.isEmpty(insumo.getCodigosConcatenadosInsumo())) {
+			 this.saveCodigoEspecificoInsumo(insumo);
 		} 
 		
 		final Insumo insumoDb = this.insumoRepository.save(insumo);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(this.modelMapper.map(insumoDb, InsumoDTO.class));
+		return ResponseEntity.status(HttpStatus.CREATED).body(insumoDb);
 	}
 	
 	
@@ -99,33 +96,32 @@ public class InsumoController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Insumo atualizado"),
 			@ApiResponse(responseCode = "400", description = "Id inválido"),
 			@ApiResponse(responseCode = "404", description = Insumo.NAO_ENCONTRADO) })
-	public ResponseEntity<InsumoDTO> update(@PathVariable(value = "id") Long id, @RequestBody @Valid InsumoDTO insumoDTO) {
+	public ResponseEntity<Insumo> update(@PathVariable(value = "id") Long id, @RequestBody @Valid Insumo insumo) {
 		 
 		final Insumo insumoDB = this.insumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Insumo.NAO_ENCONTRADO));
 		
-		// Verificar, pois com o model mapper não está updatando
-		//this.modelMapper.map(insumoDTO, insumoDB);
-		BeanUtils.copyProperties(insumoDTO, insumoDB);
+		 
+		BeanUtils.copyProperties(insumo, insumoDB);
 		
-		insumoDB.setSubTipoInsumo(insumoDTO.getSubTipoInsumo().getId() == null ? null : new SubTipoInsumo(insumoDTO.getSubTipoInsumo().getId()));
-		insumoDB.setTipoMarcaModelo(insumoDTO.getTipoMarcaModelo().getId() == null ? null : new TipoMarcaModelo(insumoDTO.getTipoMarcaModelo().getId()));
-		insumoDB.setTipoInsumo(insumoDTO.getTipoInsumo().getId() == null ? null : new TipoInsumo(insumoDTO.getTipoInsumo().getId()));
+		insumoDB.setSubTipoInsumo(insumo.getSubTipoInsumo().getId() == null ? null : new SubTipoInsumo(insumo.getSubTipoInsumo().getId()));
+		insumoDB.setTipoMarcaModelo(insumo.getTipoMarcaModelo().getId() == null ? null : new TipoMarcaModelo(insumo.getTipoMarcaModelo().getId()));
+		insumoDB.setTipoInsumo(insumo.getTipoInsumo().getId() == null ? null : new TipoInsumo(insumo.getTipoInsumo().getId()));
 		
 		this.insumoRepository.save(insumoDB);
    	
-		if (insumoDTO.getCodigosConcatenadosInsumo() != null && !insumoDTO.getCodigosConcatenadosInsumo().isEmpty()) {
+		if (insumo.getCodigosConcatenadosInsumo() != null && !insumo.getCodigosConcatenadosInsumo().isEmpty()) {
 			 
 			 List<CodigoEspecificoInsumo> codigosEspecificosDelete = this.codigoEspecificoInsumoRespository.findAllByInsumo(insumoDB);
 			 if (codigosEspecificosDelete != null && !codigosEspecificosDelete.isEmpty()) {
 				  this.codigoEspecificoInsumoRespository.deleteAll(codigosEspecificosDelete);
 			 }
 			
-			 this.saveCodigoEspecificoInsumo(insumoDB, insumoDTO);
+			 this.saveCodigoEspecificoInsumo(insumoDB);
 		}
 		
 		
 		 
-		return ResponseEntity.ok(this.modelMapper.map(insumoDB, InsumoDTO.class));
+		return ResponseEntity.ok(insumoDB);
 	}
 	
 	@DeleteMapping("{id}")
@@ -148,16 +144,15 @@ public class InsumoController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "sucesso", content = @Content(schema = @Schema(implementation = Insumo.class))),
 			@ApiResponse(responseCode = "404", description = Insumo.NAO_ENCONTRADO) })
-	public ResponseEntity<InsumoDTO> findById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Insumo> findById(@PathVariable(value = "id") Long id) {
 
 		final Insumo insumo = this.insumoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Insumo.NAO_ENCONTRADO));
-		final InsumoDTO insumoDTO = this.modelMapper.map(insumo, InsumoDTO.class);
-
+		 
 		if (insumo.getCodigosEspecificosInsumo() != null && !insumo.getCodigosEspecificosInsumo().isEmpty()) {
-			insumoDTO.setCodigosConcatenadosInsumo(insumo.getCodigosEspecificosInsumo().stream().map(CodigoEspecificoInsumo::getCodigo).collect(Collectors.joining(",")));
+			insumo.setCodigosConcatenadosInsumo(insumo.getCodigosEspecificosInsumo().stream().map(CodigoEspecificoInsumo::getCodigo).collect(Collectors.joining(",")));
 		}
 
-		return ResponseEntity.ok(insumoDTO);
+		return ResponseEntity.ok(insumo);
 
 	}
 	
@@ -166,7 +161,7 @@ public class InsumoController {
 	@Operation(summary = "Recupera os insumos", description = "Retorna os insumos de acordo com o tamanho da página", tags = { "insumos" })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "sucesso", content = @Content(schema = @Schema(implementation = Insumo.class))) })
-	public ResponseEntity<Iterable<InsumoDTO>> findAll(@RequestParam("page") Integer page, 
+	public ResponseEntity<Iterable<Insumo>> findAll(@RequestParam("page") Integer page, 
 			                        @RequestParam("size") Integer size,
 			                        @RequestParam(value = "direction", defaultValue = "asc") String direction,
 			                        @RequestParam(value = "tipoInsumo", required = false) Long tipoInsumo,
@@ -185,21 +180,21 @@ public class InsumoController {
 
 		final List<Insumo> insumos = result.get().collect(Collectors.toList());
 	 
-		final List<InsumoDTO> insumosDTO  = this.modelMapper.map(insumos, new TypeToken<List<InsumoDTO>>() {}.getType());
+		 
 		
-		if (!insumosDTO.isEmpty()) {
-			insumosDTO.get(0).setTotalElementos(result.getTotalElements());
+		if (!insumos.isEmpty()) {
+			insumos.get(0).setTotalElementos(result.getTotalElements());
 		}
 
-		return ResponseEntity.ok(insumosDTO);
+		return ResponseEntity.ok(insumos);
 	}
 	
-	private void saveCodigoEspecificoInsumo(Insumo insumo, InsumoDTO insumoDTO) {
-		 if (insumoDTO.getCodigosConcatenadosInsumo().contains(",")) {
-			 insumo.setCodigosEspecificosInsumo((Arrays.asList(insumoDTO.getCodigosConcatenadosInsumo().split(",")).stream().map(codigo -> new CodigoEspecificoInsumo(insumo,codigo)).collect(Collectors.toList())));
+	private void saveCodigoEspecificoInsumo(Insumo insumo) {
+		 if (insumo.getCodigosConcatenadosInsumo().contains(",")) {
+			 insumo.setCodigosEspecificosInsumo((Arrays.asList(insumo.getCodigosConcatenadosInsumo().split(",")).stream().map(codigo -> new CodigoEspecificoInsumo(insumo,codigo)).collect(Collectors.toList())));
 		 } else {
 			 insumo.setCodigosEspecificosInsumo(new ArrayList<CodigoEspecificoInsumo>());
-			 insumo.getCodigosEspecificosInsumo().add(new CodigoEspecificoInsumo(insumo,insumoDTO.getCodigosConcatenadosInsumo()));
+			 insumo.getCodigosEspecificosInsumo().add(new CodigoEspecificoInsumo(insumo,insumo.getCodigosConcatenadosInsumo()));
 		 }	
 	}
 	

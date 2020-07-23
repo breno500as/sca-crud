@@ -10,8 +10,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.puc.sca.crud.entity.BaseEntity;
 
 /**
@@ -44,6 +48,7 @@ public class Insumo extends BaseEntity {
 	@ManyToOne
 	private TipoMarcaModelo tipoMarcaModelo;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CodigoEspecificoInsumo> codigosEspecificosInsumo;
 
@@ -52,6 +57,35 @@ public class Insumo extends BaseEntity {
 	private String linkInformacoesTecnicasFornecedor;
 
 	private Integer quantidade;
+	
+	@Transient
+	private String codigosConcatenadosInsumo;
+	
+ 
+	@Transient
+	private Long totalElementos;
+	
+	
+	/**
+	 * Construtor para instanciar os relacionamentos no momento da deserialização.
+	 * 
+	 * @param tipoInsumo      - {@link TipoInsumo}
+	 * @param subTipoInsumo   - {@link SubTipoInsumo}
+	 * @param tipoMarcaModelo - {@link TipoMarcaModelo}
+	 */
+
+	@JsonCreator
+	public Insumo(@JsonProperty("tipoInsumo") TipoInsumo tipoInsumo,
+			@JsonProperty("subTipoInsumo") SubTipoInsumo subTipoInsumo,
+			@JsonProperty("tipoMarcaModelo") TipoMarcaModelo tipoMarcaModelo) {
+		this.tipoInsumo = tipoInsumo;
+		this.subTipoInsumo = subTipoInsumo;
+		this.tipoMarcaModelo = tipoMarcaModelo;
+	}
+	
+	public Insumo (){
+		
+	}
 
 	public List<CodigoEspecificoInsumo> getCodigosEspecificosInsumo() {
 		return codigosEspecificosInsumo;
@@ -170,6 +204,22 @@ public class Insumo extends BaseEntity {
 		} else if (!tipoMarcaModelo.equals(other.tipoMarcaModelo))
 			return false;
 		return true;
+	}
+	
+	public String getCodigosConcatenadosInsumo() {
+		return codigosConcatenadosInsumo;
+	}
+	
+	public void setCodigosConcatenadosInsumo(String codigosConcatenadosInsumo) {
+		this.codigosConcatenadosInsumo = codigosConcatenadosInsumo;
+	}
+	
+	public Long getTotalElementos() {
+		return totalElementos;
+	}
+	
+	public void setTotalElementos(Long totalElementos) {
+		this.totalElementos = totalElementos;
 	}
 
 }

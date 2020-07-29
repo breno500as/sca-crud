@@ -71,7 +71,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 						LocalDateTime.now(),
 						request.getDescription(false),
 						parts[parts.length -1].trim());
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
 

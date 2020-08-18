@@ -1,25 +1,26 @@
 package com.puc.sca.crud.exception.handler;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.puc.sca.util.exception.ExceptionResponse;
 
+
+/**
+ * Handle de exceções do Bean Validation.
+ * O codigo de resposta HTTP 422 Unprocessable Entity indica que o servidor entende o tipo de conteúdo da entidade da requisição, e
+ * a sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.
+ * https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/422
+ */
+
+/**
+ * Handle chamado quando o arquivo ultrapassa o tamanho permitido.
+ */
 
 
 @ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	/*
 	
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
@@ -42,12 +43,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 	
 	
-	/**
-	 * Handle de exceções do Bean Validation.
-	 * O codigo de resposta HTTP 422 Unprocessable Entity indica que o servidor entende o tipo de conteúdo da entidade da requisição, e
-	 * a sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.
-	 * https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/422
-	 */
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -61,9 +57,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 	
 	
-	/**
-	 * Handle chamado quando o arquivo ultrapassa o tamanho permitido.
-	 */
+
 	
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	protected ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex,
@@ -77,5 +71,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
+	*/
 
 }

@@ -1,0 +1,158 @@
+image: docker/compose:latest
+
+services:
+  - docker:dind #a imagem docker do gitlab roda em cima da distribuição Alpine, com shell sh
+  
+stages: 
+  - compile
+  - test-package
+  - tag
+  - deploy
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml" #especifica a utilização do settings.xml específico
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dgithub.repository.server.username=$MAVEN_REPO_USER -Dgithub.repository.server.password=$MAVEN_REPO_PASS"
+  DOCKER_HOST: tcp://docker:2375/
+  
+cache:
+   key: "$CI_BUILD_REF_NAME"
+   paths:
+    - .m2/repository/
+
+compile: &compile
+  image: maven:latest
+  stage: compile
+  script:
+    - mvn -P dev $MAVEN_CLI_OPTS $MAVEN_OPTS compile
+  only:
+    variables:
+       - $CI_COMMIT_MESSAGE =~ /.*deploy-.*$/
+              
+test-integration: &test-integration
+  <<: *compile
+  stage: test-package
+  script:
+    - mvn -P dev $MAVEN_CLI_OPTS $MAVEN_OPTS verify
+       
+test-package-hml: &test-package
+  <<: *test-integration
+  script:
+    - mvn -P hml $MAVEN_CLI_OPTS $MAVEN_OPTS package
+  artifacts:
+    name: sca-crud
+    paths: 
+       - target/sca-crud-exec.jar
+  only:
+    variables:
+       - $CI_COMMIT_MESSAGE =~ /.*deploy-hml/
+      
+test-package-prd-heroku: 
+  <<: *test-package
+  script:
+    - mvn -P prd-heroku $MAVEN_CLI_OPTS $MAVEN_OPTS package
+  only:
+    variables:
+       - $CI_COMMIT_MESSAGE =~ /.*deploy-prd-heroku/
+       
+test-package-prd-aws: 
+  <<: *test-package
+  script:
+    - mvn -P prd-aws $MAVEN_CLI_OPTS $MAVEN_OPTS package
+  only:
+    variables:
+       - $CI_COMMIT_MESSAGE =~ /.*deploy-prd-aws/
+
+tag-prd:
+  image: gitlab/gitlab-ce
+  stage: tag
+  before_script:
+   - git remote set-url origin https://$GITLAB_USER_NAME:$GITLAB_ACCESS_TOKEN@gitlab.com/$APP_NAME.git
+   - git config --global user.email $GITLAB_USER_EMAIL
+   - git config --global user.name $GITLAB_USER_NAME
+  script:
+    - VERSION_TAG=$(cat pom.xml | egrep "<version>.*</version>" | tr "<version></version>" " " | sed -n 2p | sed -e 's/^[[:space:]]*//')
+    - git tag $APP_NAME-$CI_JOB_ID-v$VERSION_TAG -m "IC esteira"-v$VERSION_TAG
+    - git push -o ci.skip --tags https://gitlab-ci-token:$GITLAB_ACCESS_TOKEN@gitlab.com/$GITLAB_USER_NAME/$APP_NAME.git
+  only:
+    refs:
+      - master
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /.*deploy-prd.*$/
+
+deploy-hml: #deploy no docker hub
+  stage: deploy
+  before_script:
+    - docker-compose build
+    - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+  script:
+    - docker tag $APP_NAME $DOCKER_USERNAME/$APP_NAME:$CI_JOB_ID
+    - docker tag $APP_NAME $DOCKER_USERNAME/$APP_NAME
+    - docker push $DOCKER_USERNAME/$APP_NAME:$CI_JOB_ID
+    - docker push $DOCKER_USERNAME/$APP_NAME
+  environment:
+    name: docker-hub
+    url: https://hub.docker.com/repository/docker/breno500as/sca-crud 
+  only:
+    refs: 
+      - /^release-.*$/
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /.*deploy-hml/
+     
+deploy-prd-heroku:
+  stage: deploy
+  before_script:
+    - docker-compose build    
+    - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+    - echo $HEROKU_PASSWORD | docker login --username $HEROKU_USERNAME --password-stdin registry.heroku.com
+  script:
+    - docker tag $APP_NAME $DOCKER_USERNAME/$APP_NAME:$CI_JOB_ID
+    - docker tag $APP_NAME registry.heroku.com/$APP_NAME/web
+    - docker push $DOCKER_USERNAME/$APP_NAME:$CI_JOB_ID
+    - docker push registry.heroku.com/$APP_NAME/web
+    - docker run --rm -e HEROKU_API_KEY=$HEROKU_API_KEY wingrunr21/alpine-heroku-cli container:release web --app $APP_NAME
+  environment:
+    name: heroku
+    url: https://sca-crud.herokuapp.com/crud/tipos-insumo
+  only:
+    refs:
+      - master
+    variables:
+       - $CI_COMMIT_MESSAGE =~ /.*deploy-prd-heroku/
+       
+       
+deploy-prd-aws:
+  stage: deploy
+  before_script:
+   #Atualiza pacotes, instala o php, instala o aws-cli, builda a imagem
+   - apk update
+   - apk upgrade
+   - apk add util-linux pciutils usbutils coreutils binutils findutils grep
+   - apk add python python-dev py-pip
+   - pip install awscli
+   - docker-compose build
+   - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+  script:
+    #Atualiza a imagem no docker hub
+    - docker tag $APP_NAME $DOCKER_USERNAME/$APP_NAME:$CI_JOB_ID
+    - docker tag $APP_NAME $DOCKER_USERNAME/$APP_NAME
+    - docker push $DOCKER_USERNAME/$APP_NAME:$CI_JOB_ID
+    - docker push $DOCKER_USERNAME/$APP_NAME
+    #Atualiza a imagem no ECR
+    #Comandos abaixo obtidos do ECR ao clicar no botão View Push Commands
+    - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 596058222797.dkr.ecr.us-east-2.amazonaws.com
+    - docker tag $APP_NAME:latest $AWS_IMAGE_REPO_URL:$CI_JOB_ID
+    #Comentando pois o ECS e ECR estão deletados na minha conta
+    #- docker push $AWS_IMAGE_REPO_URL:$CI_JOB_ID
+    
+    #Initializa a task no ECS
+    #- aws ecs update-service --cluster $AWS_CLUSTER_NAME --service $AWS_SERVICE_NAME --task-definition $AWS_TASK_DEFINITION_NAME --region $AWS_DEFAULT_REGION
+  environment:
+    name: aws
+    url: https://aws
+  only:
+    refs:
+     - master
+    variables:
+     - $CI_COMMIT_MESSAGE =~ /.*deploy-prd-aws/
+     
+    

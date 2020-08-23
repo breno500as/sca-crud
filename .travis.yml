@@ -11,7 +11,6 @@ cache:
   - "$HOME/.cache"
 script:
   - sudo apt-get update
-  - cp .travis.settings.xml $HOME/.m2/settings.xml
   - mvn clean -s .m2/settings.xml -Dmaven.repo.local=.m2/repository -Dgithub.repository.server.username=$GITHUB_REPOSITORY_SERVER_USERNAME -Dgithub.repository.server.password=$GITHUB_REPOSITORY_SERVER_PASSWORD -P github -DskipTests package
   - docker-compose build
 install: skip

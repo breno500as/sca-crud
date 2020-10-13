@@ -49,10 +49,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *
  */
 
+@EnableCaching
+@EnableCircuitBreaker
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableCircuitBreaker
-@EnableCaching
 public class ScaCrudApplication {
 
 	public static void main(String[] args) {

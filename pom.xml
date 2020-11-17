@@ -16,7 +16,7 @@
 	<description>Aplicação para crud de insumos de uma mineiradora</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
 		<!-- O endereço que leva à sua instalação do Sonar -->
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
